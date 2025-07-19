@@ -5,6 +5,7 @@ import google.generativeai as genai
 from openai import OpenAI
 from google.api_core.exceptions import ResourceExhausted
 import os
+import requests
 
 # Load the sentence transformer model for embedding
 model = SentenceTransformer('./all-MiniLM-L6-v2')
@@ -15,13 +16,15 @@ with open("model/insura_chunks.pkl", "rb") as f:
     chunks = pickle.load(f)
 
 # === Configure Gemini ===
-genai.configure(api_key="AIzaSyCCTg-ef13UJqOpy7HgjBR6Ptt7Q1YnkeQ")
+genai.configure(api_key="AIzaSyAQYAGbqHXS5FXzPENfzWrVQS5CsWjQY38")
 
 # === Configure OpenRouter ===
 openrouter = OpenAI(
     base_url="https://openrouter.ai/api/v1",
     api_key="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"  # Replace with your actual OpenRouter key
 )
+
+AIML_API_KEY = "ecb4f13b9f6440bda3ab2f54c05e7e42"  # Your aimlapi.com key
 
 def get_response(query: str) -> str:
     # Embed the query and retrieve top matching context
@@ -102,5 +105,22 @@ def generate_reply(query: str, context: str) -> str:
         )
         return response.choices[0].message.content.strip()
 
+    except Exception:
+        pass
+
+    # === Try aimlapi.com using OpenAI client ===
+    try:
+        client = OpenAI(
+            base_url="https://api.aimlapi.com/v1",
+            api_key=AIML_API_KEY
+        )
+        response = client.chat.completions.create(
+            model="gpt-4o",  # Or another model supported by aimlapi.com
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_input}
+            ]
+        )
+        return response.choices[0].message.content.strip()
     except Exception as e:
         return f"❌ All models failed: {str(e)}"
