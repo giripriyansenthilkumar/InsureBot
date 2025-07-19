@@ -85,7 +85,6 @@ def user_registration():
     return render_template('user_registration.html')
 
 # User login
-# User login
 @app.route('/user_login')
 def user_login():
     return render_template('user_login.html')

@@ -1,0 +1,38 @@
+# --- Correct/Recommended Prompts ---
+What is covered under a standard health insurance policy?
+How do I file a claim for car insurance?
+What documents are required for life insurance application?
+Can you explain the difference between term and whole life insurance?
+How does the no-claim bonus work in motor insurance?
+What is the waiting period for pre-existing diseases in health insurance?
+How can I update my address in my insurance policy?
+What is not covered under travel insurance?
+How do I check the status of my insurance claim?
+What are the tax benefits of buying health insurance?
+Can I transfer my car insurance to a new owner?
+What is a deductible in insurance and how does it work?
+How do I cancel my insurance policy?
+What is the process for renewing my policy online?
+Are there any exclusions in my home insurance policy?
+How do I change my nominee in my policy?
+What is the grace period for premium payment?
+Can I buy insurance for my pet?
+Is accidental death covered in my policy?
+How do I port my health insurance policy to another provider?
+What is the claim settlement ratio?
+
+# --- Incorrect/Not Recommended Prompts (format, ambiguity, or out of scope) ---
+Tell me everything about insurance.                # Too broad
+asdfghjkl;                                         # Gibberish
+What is the weather today?                         # Out of insurance domain
+Can you write my homework?                         # Not relevant
+Give me free insurance.                            # Not a valid query
+How do I hack insurance companies?                 # Unethical/illegal
+Why is the sky blue?                               # Out of scope
+What is the meaning of life?                       # Philosophical, not insurance
+Can you give me your API key?                      # Security risk
+What is the best insurance in the world?           # Too subjective/vague
+How do I get rich quick with insurance?            # Not factual/ethical
+Tell me a joke.                                    # Not insurance-related
+List all insurance companies in the world.         # Too broad, not feasible
+Who is the CEO of my insurance company?            # Not in knowledge
