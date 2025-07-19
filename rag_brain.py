@@ -123,4 +123,31 @@ def generate_reply(query: str, context: str) -> str:
         )
         return response.choices[0].message.content.strip()
     except Exception as e:
+        pass
+
+        # === Try RapidAPI Llama as last fallback ===
+    try:
+        url = "https://open-ai21.p.rapidapi.com/conversationllama"
+        headers = {
+            "Content-Type": "application/json",
+            "x-rapidapi-host": "open-ai21.p.rapidapi.com",
+            "x-rapidapi-key": "ed49e99973msh594672cd9a67720p17cb1fjsn03c781360344"
+        }
+        payload = {
+            "messages": [
+                {"role": "user", "content": query}
+            ],
+            "web_access": False
+        }
+        response = requests.post(url, headers=headers, json=payload, timeout=30)
+        response.raise_for_status()
+        data = response.json()
+        # Adjust response parsing as needed
+        if "result" in data:
+            return data["result"].strip()
+        elif "choices" in data and data["choices"]:
+            return data["choices"][0]["message"]["content"].strip()
+        else:
+            return str(data)
+    except Exception as e:
         return f"❌ All models failed: {str(e)}"
