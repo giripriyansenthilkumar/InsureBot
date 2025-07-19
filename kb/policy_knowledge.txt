@@ -1,0 +1,61 @@
+ Premium Amount - 100000
+    Premium Frequency - Yearly
+    Sum Assured - 1000000
+    Policy Term - 10 years
+    Premium Payment Term - 7 years
+    Due Date - 25th September 2024
+    Fund Value - 553089
+    Premium paid till date - 400000
+
+    Effective Returns - 11.47%
+    Charges - 3.89 %
+        
+    Loyalty Benefits - 22000 approximately
+
+    Fund List:
+    Pure Stock Fund - Allocation 35%, 5 year perfomance 18.22%, performance since buying 16.91%
+    Bluechip Equity Fund - Allocation 35%, 5 year perfomance 16.69%, performance since buying 17.23%
+    Pure Stock Fund 2 - Allocation 30%, 5 year perfomance 16.69%, performance since buying 16.66%
+    Equity Growth Fund 2 - Allocation 0%, 5 year perfomance 14.96%, performance since buying 16.22%
+    Accelorator Midcap Fund 2 - Allocation 0%, 5 year perfomance 18.52%, performance since buying 20.13%
+
+    Growth @ 8% - Pay all premium and stay till end - 1184000, Effective Returns - 7.73%, Charges - 1.61%, Pay 1 and stay -  1036844
+    Growth @ 4% - Pay all premium and stay till end - 972576, Effective Returns - 4.78%, Charges - 1.46%, Pay 1 and stay - 840104
+    Historical Growth (17.33%) - Pay all premium and stay till end - 1999690, Effective Returns - 15.60%, Charges - 2.03%, Pay 1 and stay - 1788153
+
+    Switch to safe funds - Bond Fund, last 5 year returns - 5.45%
+
+    Tax Benefit
+
+    Scenario Based Talking Points - 
+    1. Markets are too high, I wish to pay when markets fall
+    -   Specific due dates by which premium needs to be paid, and as you wait, your life insurance worth Rs. 10,00,000 has been reduced to NIL
+        You can choose to invest your monies in any of our debt oriented funds which have lower investment risk. For instance, our Bond Fund has 5 year annualised returns of 5.45%. You can switch to equity funds at any point when your views of the market changes.
+        Alternatively, through Auto-transfer Portfolio strategy option you can systematically move your monies from debt funds to equity funds
+
+    2. I do not want to pay any more premiums as it was sold to me as single premium plan
+    -   PPT 7 years, on your policy document
+        By discontinuing, you are missing value of investment in 2 ways. Your money will be invested in low yield Discontinued Life Fund, with a 5 year annualised return of 4.30% vs. market linked funds available to you; for instance annualised 5 year historical return in Pure Stock Fund is 16.91%
+        You lose life cover of Rs. 10,00,000
+        Continue paying premiums to continue insurance cover of Rs. 10,00,000 and move back to market linked funds
+        Loyalty additions of 22,000 (@ 8% scenario) over policy term
+
+    3. Immediate/Emergency Financial Needs/Medical emergency and hence not paying premiums
+    -   Specific due dates by which premium needs to be paid, and on  your not paying premium, life insurance worth Rs. 10,00,000 ishas been reduced to NIL 
+        Suggest the customer to pay the premium by credit card
+        After paying the current outstanding amount and reviving the policy you can switch to half-yearly, quarterly or monthly frequency for future premiums (right now the customer will have to pay full outstand amount and this option can be only applied from next premium onwards)
+        Only applicable if policy has completed 5 years You have the option of partial withdrawal to address your emergency needs
+
+    4. Better alternatives available (e.g. Mutual funds/Business)
+    -   Compare future effective charges vs. alternative financial plans before you make a decision. As an example, in most mutual funds, the effective charge would be 2% due to expense ratios AND of course, these plans do not provide you life insurance cover for which you have to set aside monies separately.
+        In your policy, the effective charges reduce and your returns get closer to the actual fund return. Effective charges for the rest of the policy term is 1.61% under 8% gross returns scenario.
+        Loyalty additions of 22,000 @ 8% returns scenario over the policy term. Such benefits are not available in alternative instruments such as mutual funds.
+
+    5. Low/unsatisfactory returns in policy
+    -   You have earned annualised effective returns (post deduction of all charges and taxes) of 11.47%
+        In your policy, the effective charges (including the cost of life insurance cover and taxes) reduces sharply post the lock-in period . Effective charges for the rest of the policy term is 1.61% as against an effective charge of 3.89% till date
+        In case you are dissatisfied with your fund performance you can switch your monies to any other funds in the product based on your risk appetite
+
+    6. Buying a new policy
+    -   Another ULIP policy: ULIPs have higher charges in initial years compared to later years. Hence it is not wise to purchase a new ULIP by surrendering/discontinuing an existing policy. In case of your policy the effective charges for rest of the policy term is only 1.61% which would be much cheaper than that in a new ULIP policy.
+        A traditional savings plan: Your asset allocation should be diversified and hence while purchasing a traditional plan can do that, you could also look at diversifying your asset allocation by switching part of your funds to a debt fund available
