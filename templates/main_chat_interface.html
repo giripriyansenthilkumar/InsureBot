@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Chat Assistant - VoiceChat Bot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <script src="{{ url_for('static', filename='dhws-data-injector.js') }}"></script>
+    <style>
+        body {
+            background: #18181b;
+            color: #f3f4f6;
+        }
+        .bg-surface, .bg-secondary-50, .bg-secondary-100, .bg-secondary-200, .bg-secondary-300 {
+            background: #23232a !important;
+        }
+        .text-text-primary, .text-secondary-600, .text-secondary-500, .text-primary, .text-accent, .text-error, .text-success {
+            color: #f3f4f6 !important;
+        }
+        .border-secondary-200, .border-secondary-300, .border-primary {
+            border-color: #444 !important;
+        }
+        .rounded-button, .rounded-full, .rounded-lg {
+            border-radius: 8px !important;
+        }
+        button, .rounded-button {
+            background: #fbbf24 !important;
+            color: #18181b !important;
+            font-weight: bold;
+            border: none;
+            box-shadow: 0 2px 8px #0006;
+            transition: background 0.2s, color 0.2s;
+        }
+        button:hover, .rounded-button:hover {
+            background: #f59e42 !important;
+            color: #fff !important;
+        }
+        .bg-primary, .bg-primary-700 {
+            background: #fbbf24 !important;
+            color: #18181b !important;
+        }
+        .bg-accent, .bg-accent-600 {
+            background: #6366f1 !important;
+            color: #fff !important;
+        }
+        .bg-error, .bg-error-600 {
+            background: #ef4444 !important;
+            color: #fff !important;
+        }
+        .bg-success, .bg-success-100 {
+            background: #22c55e !important;
+            color: #fff !important;
+        }
+        .message-bubble {
+            background: #23232a !important;
+            color: #f3f4f6 !important;
+            border-radius: 10px;
+        }
+        textarea, input[type="text"] {
+            background: #18181b !important;
+            color: #f3f4f6 !important;
+            border: 1px solid #444 !important;
+        }
+        .shadow-floating {
+            box-shadow: 0 2px 8px #0006 !important;
+        }
+        /* Custom dark theme for scrollbars */
+        ::-webkit-scrollbar {
+            width: 8px;
+            background: #23232a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #444;
+            border-radius: 8px;
+        }
+        /* Custom dark theme for modal overlay */
+        .bg-black.bg-opacity-50 {
+            background: rgba(24,24,27,0.85) !important;
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fvoicechat1843back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.6"></script>
+</head>
+<body class="bg-background min-h-screen font-inter">
+    <!-- Header -->
+    <header class="bg-surface shadow-subtle border-b border-secondary-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo and Title -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12c0 1.54.36 3.04 1.05 4.35L2 22l5.65-1.05C9.96 21.64 11.46 22 13 22h7c1.1 0 2-.9 2-2V12c0-5.52-4.48-10-10-10z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-semibold text-text-primary">InsureBot - AI Chat Assistant</h1>
+                        <p class="text-sm text-secondary-500">Welcome back, {{ user_name }}</p>
+                    </div>
+                </div>
+                
+                <!-- Header Actions -->
+                <div class="flex items-center space-x-4">
+                    <!-- Voice Mode Toggle -->
+                    <div class="flex items-center space-x-2">
+                        <span class="text-sm text-secondary-600">Voice Mode</span>
+                        <button id="voiceModeToggle" class="relative inline-flex h-6 w-11 items-center rounded-full bg-secondary-200 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                            <span class="sr-only">Enable voice mode</span>
+                            <span id="voiceModeSlider" class="inline-block h-4 w-4 transform rounded-full bg-white shadow-sm transition-transform translate-x-1"></span>
+                        </button>
+                    </div>
+                    
+                    <!-- Settings -->
+                    <a href="{{ url_for('user_settings') }}" class="p-2 text-secondary-600 hover:text-text-primary rounded-button hover:bg-secondary-100 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                    </a>
+                    
+                    <!-- About -->
+                    <a href="{{ url_for('about') }}" class="p-2 text-secondary-600 hover:text-text-primary rounded-button hover:bg-secondary-100 transition-colors" title="About">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 16v-4m0-4h.01"/>
+                        </svg>
+                    </a>
+
+                <!-- Log Out -->
+                    <a href="{{ url_for('user_login') }}" class="p-2 text-error hover:text-white rounded-button hover:bg-error transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Chat Interface -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <!-- Chat Mode Tabs -->
+        <div class="bg-surface rounded-lg shadow-subtle border border-secondary-200 mb-6">
+            <div class="flex border-b border-secondary-200">
+                <button id="voiceChatTab" class="flex-1 flex items-center justify-center space-x-2 py-4 px-6 text-sm font-medium border-b-2 border-primary text-primary">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
+                    </svg>
+                    <span>Voice Chat</span>
+                </button>
+                <button id="textChatTab" class="flex-1 flex items-center justify-center space-x-2 py-4 px-6 text-sm font-medium border-b-2 border-transparent text-secondary-600 hover:text-text-primary hover:border-secondary-300">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                    </svg>
+                    <span>Text Chat</span>
+                </button>
+            </div>
+
+            <!-- Voice Chat Interface -->
+            <div id="voiceChatInterface" class="p-6">
+                <div class="text-center mb-6">
+                    <div class="flex items-center justify-center space-x-2 mb-2">
+                        <div class="w-3 h-3 bg-success rounded-full"></div>
+                        <span class="text-sm font-medium text-text-primary">Voice Chat Active</span>
+                    </div>
+                    <p id="voiceStatus" class="text-sm text-secondary-600">Ready</p>
+                </div>
+
+                <!-- Audio Waveform Visualization -->
+                <div class="mb-8">
+                    <div class="h-32 bg-secondary-50 rounded-lg flex items-center justify-center border-2 border-dashed border-secondary-200">
+                        <div id="audioWaveform" class="flex items-center space-x-1">
+                            <div class="w-1 h-8 bg-secondary-300 rounded-full"></div>
+                            <div class="w-1 h-12 bg-secondary-300 rounded-full"></div>
+                            <div class="w-1 h-6 bg-secondary-300 rounded-full"></div>
+                            <div class="w-1 h-16 bg-secondary-300 rounded-full"></div>
+                            <div class="w-1 h-4 bg-secondary-300 rounded-full"></div>
+                            <div class="w-1 h-20 bg-secondary-300 rounded-full"></div>
+                            <div class="w-1 h-8 bg-secondary-300 rounded-full"></div>
+                            <div class="w-1 h-12 bg-secondary-300 rounded-full"></div>
+                            <div class="w-1 h-6 bg-secondary-300 rounded-full"></div>
+                            <div class="w-1 h-14 bg-secondary-300 rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Voice Controls -->
+                <div class="flex items-center justify-center space-x-6 mb-6">
+                    <button id="startRecordingBtn" class="w-16 h-16 bg-primary hover:bg-primary-700 text-white rounded-full flex items-center justify-center shadow-floating transition-all transform hover:scale-105">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
+                        </svg>
+                    </button>
+                    
+                    <button id="stopRecordingBtn" class="hidden w-16 h-16 bg-error hover:bg-error-600 text-white rounded-full flex items-center justify-center shadow-floating transition-all transform hover:scale-105">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M6 6h12v12H6z"/>
+                        </svg>
+                    </button>
+                    
+                    <button id="downloadVoiceBtn" class="p-3 bg-accent hover:bg-accent-600 text-white rounded-full shadow-floating transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                    </button>
+
+                    <button id="stopVoiceBtn" class="p-3 bg-error hover:bg-error-600 text-white rounded-full shadow-floating transition-colors" title="Stop Voice">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                        <span class="sr-only">Stop Voice</span>
+                    </button>
+                </div>
+
+                <!-- Recording Timer -->
+                <div id="recordingTimer" class="hidden text-center">
+                    <div class="text-2xl font-mono text-primary mb-2">00:00</div>
+                    <div class="flex items-center justify-center space-x-2">
+                        <div class="w-2 h-2 bg-error rounded-full animate-pulse-recording"></div>
+                        <span class="text-sm text-error">Recording...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Text Chat Interface -->
+            <div id="textChatInterface" class="hidden p-6">
+                <div class="text-center mb-6">
+                    <div class="flex items-center justify-center space-x-2 mb-2">
+                        <div class="w-3 h-3 bg-success rounded-full"></div>
+                        <span class="text-sm font-medium text-text-primary">Text Chat Active</span>
+                    </div>
+                    <p class="text-sm text-secondary-600">Ready to chat</p>
+                </div>
+
+                <!-- Text Input Area -->
+                <div class="mb-6">
+                    <textarea id="textInput" placeholder="Type your message here..." class="w-full h-32 p-4 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary resize-none"></textarea>
+                </div>
+
+                <!-- Text Controls -->
+                <div class="flex items-center justify-center space-x-4 mb-6">
+                    <button id="sendTextBtn" class="px-6 py-3 bg-primary hover:bg-primary-700 text-white rounded-lg shadow-floating transition-colors">
+                        <div class="flex items-center space-x-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                            </svg>
+                            <span>Send Message</span>
+                        </div>
+                    </button>
+                    
+                    <button id="downloadTextBtn" class="px-6 py-3 bg-accent hover:bg-accent-600 text-white rounded-lg shadow-floating transition-colors">
+                        <div class="flex items-center space-x-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            <span>Download Chat</span>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Character Count -->
+                <div class="text-center">
+                    <span id="charCount" class="text-sm text-secondary-500">0 characters</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Messages -->
+        <div id="chatMessages" class="space-y-4 mb-6">
+            <!-- Welcome Message -->
+            <div class="flex items-start space-x-3">
+                <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12c0 1.54.36 3.04 1.05 4.35L2 22l5.65-1.05C9.96 21.64 11.46 22 13 22h7c1.1 0 2-.9 2-2V12c0-5.52-4.48-10-10-10z"/>
+                    </svg>
+                </div>
+                <div class="flex-1">
+                    <div class="message-bubble p-4 max-w-md">
+                        <p class="text-text-primary">Hello! I'm your AI assistant. You can chat with me using voice or text. How can I help you today?</p>
+                    </div>
+                    <div class="flex items-center mt-2 text-xs text-secondary-500">
+                        <span>AI Assistant</span>
+                        <span class="mx-2">•</span>
+                        <span>Just now</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Messages -->
+        <div id="statusMessages" class="space-y-2">
+            <!-- Status messages will be displayed here -->
+        </div>
+    </main>
+
+    <!-- Audio Recording Modal -->
+    <div id="audioModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-surface rounded-lg p-6 max-w-md w-full mx-4">
+            <h3 class="text-lg font-semibold text-text-primary mb-4">Audio Recording</h3>
+            <div class="text-center mb-4">
+                <div id="modalWaveform" class="h-20 bg-secondary-50 rounded-lg flex items-center justify-center mb-4">
+                    <div class="flex items-center space-x-1">
+                        <div class="w-1 h-4 bg-primary rounded-full animate-pulse-recording"></div>
+                        <div class="w-1 h-8 bg-primary rounded-full animate-pulse-recording" style="animation-delay: 0.1s"></div>
+                        <div class="w-1 h-3 bg-primary rounded-full animate-pulse-recording" style="animation-delay: 0.2s"></div>
+                        <div class="w-1 h-6 bg-primary rounded-full animate-pulse-recording" style="animation-delay: 0.3s"></div>
+                        <div class="w-1 h-2 bg-primary rounded-full animate-pulse-recording" style="animation-delay: 0.4s"></div>
+                    </div>
+                </div>
+                <div class="text-2xl font-mono text-primary mb-2" id="modalTimer">00:00</div>
+                <p class="text-sm text-secondary-600">Recording your message...</p>
+            </div>
+            <div class="flex justify-center space-x-4">
+                <button id="modalStopBtn" class="px-4 py-2 bg-error hover:bg-error-600 text-white rounded-lg transition-colors">
+                    Stop Recording
+                </button>
+                <button id="modalCancelBtn" class="px-4 py-2 bg-secondary-500 hover:bg-secondary-600 text-white rounded-lg transition-colors">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let isRecording = false;
+        let recordingTimer = null;
+        let recordingStartTime = null;
+        let currentMode = 'voice'; // 'voice' or 'text'
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let audioStream = null;
+        let conversations = JSON.parse(localStorage.getItem('chatConversations') || '[]');
+        let currentConversation = { id: Date.now(), messages: [], mode: 'voice', timestamp: new Date() };
+
+        // DOM Elements
+        const voiceChatTab = document.getElementById('voiceChatTab');
+        const textChatTab = document.getElementById('textChatTab');
+        const voiceChatInterface = document.getElementById('voiceChatInterface');
+        const textChatInterface = document.getElementById('textChatInterface');
+        const startRecordingBtn = document.getElementById('startRecordingBtn');
+        const stopRecordingBtn = document.getElementById('stopRecordingBtn');
+        const downloadVoiceBtn = document.getElementById('downloadVoiceBtn');
+        const textInput = document.getElementById('textInput');
+        const sendTextBtn = document.getElementById('sendTextBtn');
+        const downloadTextBtn = document.getElementById('downloadTextBtn');
+        const charCount = document.getElementById('charCount');
+        const chatMessages = document.getElementById('chatMessages');
+        const statusMessages = document.getElementById('statusMessages');
+        const voiceStatus = document.getElementById('voiceStatus');
+        const recordingTimerElem = document.getElementById('recordingTimer');
+        const audioModal = document.getElementById('audioModal');
+        const modalTimer = document.getElementById('modalTimer');
+        const modalStopBtn = document.getElementById('modalStopBtn');
+        const modalCancelBtn = document.getElementById('modalCancelBtn');
+        const audioWaveform = document.getElementById('audioWaveform');
+        const voiceModeToggle = document.getElementById('voiceModeToggle');
+        const voiceModeSlider = document.getElementById('voiceModeSlider');
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            loadConversations();
+            updateCharacterCount();
+            // Save button event
+            document.getElementById('saveMainBtn').addEventListener('click', function() {
+                // Save chat conversations
+                localStorage.setItem('chatConversations', JSON.stringify(conversations));
+                // Save current mode and timestamp
+                localStorage.setItem('currentConversation', JSON.stringify(currentConversation));
+                // Show status message
+                showStatusMessage('All changes saved!', 'success');
+            });
+        });
+
+        // Event Listeners
+        function setupEventListeners() {
+            // Tab switching
+            voiceChatTab.addEventListener('click', () => switchMode('voice'));
+            textChatTab.addEventListener('click', () => switchMode('text'));
+
+            // Voice chat controls
+            startRecordingBtn.addEventListener('click', startRecording);
+            stopRecordingBtn.addEventListener('click', stopRecording);
+            downloadVoiceBtn.addEventListener('click', downloadVoiceConversation);
+            document.getElementById('stopVoiceBtn').addEventListener('click', stopVoicePlayback);
+        // Stop speech synthesis (voice)
+        function stopVoicePlayback() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                showStatusMessage('Voice playback stopped', 'success');
+            }
+        }
+
+            // Text chat controls
+            sendTextBtn.addEventListener('click', sendTextMessage);
+            downloadTextBtn.addEventListener('click', downloadPdfConversation);
+            textInput.addEventListener('input', updateCharacterCount);
+            textInput.addEventListener('keypress', handleKeyPress);
+
+            // Modal controls
+            modalStopBtn.addEventListener('click', stopRecording);
+            modalCancelBtn.addEventListener('click', cancelRecording);
+
+            // Voice mode toggle
+            voiceModeToggle.addEventListener('click', toggleVoiceMode);
+        }
+
+        // Mode switching
+        function switchMode(mode) {
+            currentMode = mode;
+            currentConversation.mode = mode;
+
+            if (mode === 'voice') {
+                voiceChatTab.classList.add('border-primary', 'text-primary');
+                voiceChatTab.classList.remove('border-transparent', 'text-secondary-600');
+                textChatTab.classList.remove('border-primary', 'text-primary');
+                textChatTab.classList.add('border-transparent', 'text-secondary-600');
+                
+                voiceChatInterface.classList.remove('hidden');
+                textChatInterface.classList.add('hidden');
+            } else {
+                textChatTab.classList.add('border-primary', 'text-primary');
+                textChatTab.classList.remove('border-transparent', 'text-secondary-600');
+                voiceChatTab.classList.remove('border-primary', 'text-primary');
+                voiceChatTab.classList.add('border-transparent', 'text-secondary-600');
+                
+                textChatInterface.classList.remove('hidden');
+                voiceChatInterface.classList.add('hidden');
+            }
+
+            showStatusMessage(`Switched to ${mode} chat mode`, 'success');
+        }
+
+        // Voice mode toggle
+        function toggleVoiceMode() {
+            const isEnabled = voiceModeToggle.classList.contains('bg-primary');
+            
+            if (isEnabled) {
+                voiceModeToggle.classList.remove('bg-primary');
+                voiceModeToggle.classList.add('bg-secondary-200');
+                voiceModeSlider.classList.remove('translate-x-6');
+                voiceModeSlider.classList.add('translate-x-1');
+                switchMode('text');
+            } else {
+                voiceModeToggle.classList.add('bg-primary');
+                voiceModeToggle.classList.remove('bg-secondary-200');
+                voiceModeSlider.classList.add('translate-x-6');
+                voiceModeSlider.classList.remove('translate-x-1');
+                switchMode('voice');
+            }
+        }
+
+
+        // Audio recording and transcription functions
+        let recognition;
+        let isTranscribing = false;
+
+        async function startRecording() {
+            try {
+                // Check for microphone access
+                const devices = await navigator.mediaDevices.enumerateDevices();
+                const hasMic = devices.some(device => device.kind === 'audioinput');
+                if (!hasMic) {
+                    showStatusMessage('No microphone detected. Please connect a microphone.', 'error');
+                    voiceStatus.textContent = 'Mic not detected';
+                    return;
+                }
+                // Request microphone permission
+                audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+                // Create MediaRecorder
+                mediaRecorder = new MediaRecorder(audioStream);
+                audioChunks = [];
+
+                let transcriptResult = '';
+                let audioResult = null;
+                let finished = false;
+
+                function maybeAddVoiceMessage() {
+                    if (audioResult !== null && finished) {
+                        const audioUrl = URL.createObjectURL(audioResult);
+                        addVoiceMessage(audioUrl, audioResult, transcriptResult);
+                        // Stop audio stream
+                        if (audioStream) {
+                            audioStream.getTracks().forEach(track => track.stop());
+                        }
+                    }
+                }
+
+                mediaRecorder.ondataavailable = (event) => {
+                    audioChunks.push(event.data);
+                };
+
+                mediaRecorder.onstop = () => {
+                    audioResult = new Blob(audioChunks, { type: 'audio/wav' });
+                    maybeAddVoiceMessage();
+                };
+
+                // Start recording
+                mediaRecorder.start();
+                isRecording = true;
+                recordingStartTime = Date.now();
+
+                // Update UI (add null checks)
+                if (startRecordingBtn) startRecordingBtn.classList.add('hidden');
+                if (stopRecordingBtn) stopRecordingBtn.classList.remove('hidden');
+                if (recordingTimer) recordingTimer.classList.remove('hidden');
+                if (voiceStatus) {
+                    voiceStatus.textContent = 'Mic activated, recording...';
+                    voiceStatus.style.color = '#22c55e'; // green
+                }
+
+                // Show modal
+                if (audioModal) audioModal.classList.remove('hidden');
+
+                // Start timer
+                recordingTimer = setInterval(updateTimer, 1000);
+
+                // Animate waveform
+                if (typeof animateWaveform === 'function') animateWaveform();
+
+                showStatusMessage('Recording started', 'success');
+
+                // Start transcription and attach result to voice message
+                if (typeof startTranscription === 'function') {
+                    startTranscription(function(transcript) {
+                        transcriptResult = transcript;
+                        finished = true;
+                        maybeAddVoiceMessage();
+                    });
+                }
+
+            } catch (error) {
+                console.error('Error starting recording:', error);
+                let errorMsg = 'Could not access microphone. Please check permissions.';
+                if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
+                    errorMsg = 'Microphone access denied. Please allow access in your browser settings.';
+                }
+                // Add detailed error info for troubleshooting
+                errorMsg += `\nError Name: ${error.name || 'N/A'}\nError Message: ${error.message || error.toString()}`;
+                showStatusMessage(errorMsg, 'error');
+                if (voiceStatus) {
+                    voiceStatus.textContent = 'Mic not activated';
+                    voiceStatus.style.color = '#ef4444'; // red
+                }
+            }
+        }
+
+        function stopRecording() {
+            if (mediaRecorder && isRecording) {
+                mediaRecorder.stop();
+                isRecording = false;
+
+                // Stop transcription
+                if (typeof stopTranscription === 'function') stopTranscription();
+
+                // Update UI (add null checks)
+                if (startRecordingBtn) startRecordingBtn.classList.remove('hidden');
+                if (stopRecordingBtn) stopRecordingBtn.classList.add('hidden');
+                if (recordingTimerElem) recordingTimerElem.classList.add('hidden');
+                if (voiceStatus) voiceStatus.textContent = 'Processing...';
+
+                // Hide modal
+                if (audioModal) audioModal.classList.add('hidden');
+
+                // Clear timer
+                if (recordingTimer) {
+                    clearInterval(recordingTimer);
+                    recordingTimer = null;
+                }
+
+                // Reset waveform
+                if (typeof resetWaveform === 'function') resetWaveform();
+
+                setTimeout(() => {
+                    if (voiceStatus) voiceStatus.textContent = 'Ready';
+                    showStatusMessage('Recording saved successfully', 'success');
+                }, 1000);
+            }
+        }
+
+        // Web Speech API for transcription
+        function startTranscription(callback) {
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                showStatusMessage('Speech Recognition API not supported in this browser.', 'error');
+                if (callback) callback('');
+                return;
+            }
+            var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+            isTranscribing = true;
+            recognition.start();
+            recognition.onresult = function(event) {
+                var transcript = event.results[0][0].transcript;
+                showStatusMessage('Transcription: ' + transcript, 'success');
+                if (callback) callback(transcript);
+            };
+            recognition.onerror = function(event) {
+                showStatusMessage('Transcription error: ' + event.error, 'error');
+                isTranscribing = false;
+                if (callback) callback('');
+            };
+            recognition.onend = function() {
+                isTranscribing = false;
+            };
+        }
+        function stopTranscription() {
+            if (isTranscribing && recognition) {
+                recognition.stop();
+                isTranscribing = false;
+            }
+        }
+
+        function cancelRecording() {
+            if (mediaRecorder && isRecording) {
+                mediaRecorder.stop();
+                isRecording = false;
+                audioChunks = [];
+                
+                // Stop audio stream
+                if (audioStream) {
+                    audioStream.getTracks().forEach(track => track.stop());
+                }
+                
+                // Update UI
+                startRecordingBtn.classList.remove('hidden');
+                stopRecordingBtn.classList.add('hidden');
+                recordingTimer.classList.add('hidden');
+                voiceStatus.textContent = 'Ready';
+                
+                // Hide modal
+                audioModal.classList.add('hidden');
+                
+                // Clear timer
+                if (recordingTimer) {
+                    clearInterval(recordingTimer);
+                    recordingTimer = null;
+                }
+                
+                // Reset waveform
+                resetWaveform();
+                
+                showStatusMessage('Recording cancelled', 'warning');
+            }
+        }
+
+        function updateTimer() {
+            if (!recordingStartTime) return;
+            
+            const elapsed = Math.floor((Date.now() - recordingStartTime) / 1000);
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+            
+            const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            const timerElement = document.querySelector('#recordingTimer .text-2xl');
+            const modalTimerElement = document.getElementById('modalTimer');
+            
+            if (timerElement) timerElement.textContent = timeString;
+            if (modalTimerElement) modalTimerElement.textContent = timeString;
+        }
+
+        function animateWaveform() {
+            const waveformBars = audioWaveform.querySelectorAll('div');
+            waveformBars.forEach((bar, index) => {
+                bar.classList.add('animate-pulse-recording');
+                bar.style.animationDelay = `${index * 0.1}s`;
+                bar.classList.remove('bg-secondary-300');
+                bar.classList.add('bg-primary');
+            });
+        }
+
+        function resetWaveform() {
+            const waveformBars = audioWaveform.querySelectorAll('div');
+            waveformBars.forEach(bar => {
+                bar.classList.remove('animate-pulse-recording', 'bg-primary');
+                bar.classList.add('bg-secondary-300');
+                bar.style.animationDelay = '';
+            });
+        }
+
+        // Text chat functions
+        function sendTextMessage() {
+            const message = textInput.value.trim();
+            if (!message) return;
+            addTextMessage(message, 'user');
+            textInput.value = '';
+            updateCharacterCount();
+
+            // Call backend API
+            fetch('/chatbot_query', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && data.response) {
+                    addTextMessage(data.response, 'ai');
+                } else {
+                    addTextMessage('Error: ' + (data.error || 'No response from server.'), 'ai');
+                }
+            })
+            .catch(error => {
+                addTextMessage('Error: ' + error, 'ai');
+            });
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendTextMessage();
+            }
+        }
+
+        function updateCharacterCount() {
+            const count = textInput.value.length;
+            charCount.textContent = `${count} characters`;
+            
+            if (count > 500) {
+                charCount.classList.add('text-warning-500');
+            } else {
+                charCount.classList.remove('text-warning-500');
+            }
+        }
+
+        // Message functions
+        function addVoiceMessage(audioUrl, audioBlob) {
+            const messageId = Date.now();
+            // Accept transcript as third argument
+            const transcript = arguments.length > 2 ? arguments[2] : '';
+            const message = {
+                id: messageId,
+                type: 'voice',
+                audioUrl: audioUrl,
+                audioBlob: audioBlob,
+                text: transcript,
+                timestamp: new Date(),
+                sender: 'user'
+            };
+            currentConversation.messages.push(message);
+            saveConversations();
+            const messageElement = createVoiceMessageElement(message);
+            chatMessages.appendChild(messageElement);
+            scrollToBottom();
+
+            // If transcript exists, send to backend
+            if (transcript && transcript.trim().length > 0) {
+                addTextMessage(transcript, 'user');
+                fetch('/chatbot_query', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message: transcript })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.response) {
+                        // Add as text message
+                        addTextMessage(data.response, 'ai');
+                        // Also synthesize as voice in voice chat mode
+                        if (currentMode === 'voice') {
+                            speakText(data.response);
+                        }
+                    } else {
+                        addTextMessage('Error: ' + (data.error || 'No response from server.'), 'ai');
+                    }
+                })
+                .catch(error => {
+                    addTextMessage('Error: ' + error, 'ai');
+                });
+            }
+        }
+
+        // Text-to-speech for chatbot response in voice mode
+        function speakText(text) {
+            if ('speechSynthesis' in window && text) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 1;
+                utterance.pitch = 1;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function addTextMessage(text, sender) {
+            const messageId = Date.now();
+            const message = {
+                id: messageId,
+                type: 'text',
+                text: text,
+                timestamp: new Date(),
+                sender: sender
+            };
+            
+            currentConversation.messages.push(message);
+            saveConversations();
+            
+            const messageElement = createTextMessageElement(message);
+            chatMessages.appendChild(messageElement);
+            scrollToBottom();
+        }
+
+        function createVoiceMessageElement(message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'flex items-start space-x-3 justify-end';
+            // Show both mic symbol and transcribed text if available
+            messageDiv.innerHTML = `
+                <div class="flex-1 flex flex-col items-end">
+                    <div class="message-bubble p-4 max-w-md bg-accent text-white">
+                        <div class="flex items-center space-x-3">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
+                            </svg>
+                            <div class="flex-1">
+                                <audio controls class="w-full">
+                                    <source src="${message.audioUrl}" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </div>
+                        ${message.text ? `<div class='mt-2 text-white font-semibold'>${message.text}</div>` : ''}
+                    </div>
+                    <div class="flex items-center mt-2 text-xs text-secondary-500">
+                        <span>${message.timestamp.toLocaleTimeString()}</span>
+                    </div>
+                </div>
+                <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+                    <span class="text-white text-sm font-medium">U</span>
+                </div>
+            `;
+            return messageDiv;
+        }
+
+        function createTextMessageElement(message) {
+            const messageDiv = document.createElement('div');
+            const isUser = message.sender === 'user';
+            
+            messageDiv.className = `flex items-start space-x-3 ${isUser ? 'justify-end' : ''}`;
+            
+            if (isUser) {
+                messageDiv.innerHTML = `
+                    <div class="flex-1 flex flex-col items-end">
+                        <div class="message-bubble p-4 max-w-md bg-primary text-white">
+                            <p>${message.text}</p>
+                        </div>
+                        <div class="flex items-center mt-2 text-xs text-secondary-500">
+                            <span>${message.timestamp.toLocaleTimeString()}</span>
+                        </div>
+                    </div>
+                    <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+                        <span class="text-white text-sm font-medium">U</span>
+                    </div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="w-8 h-8 bg-accent rounded-full flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12c0 1.54.36 3.04 1.05 4.35L2 22l5.65-1.05C9.96 21.64 11.46 22 13 22h7c1.1 0 2-.9 2-2V12c0-5.52-4.48-10-10-10z"/>
+                        </svg>
+                    </div>
+                    <div class="flex-1">
+                        <div class="message-bubble p-4 max-w-md">
+                            <p class="text-text-primary">${message.text}</p>
+                        </div>
+                        <div class="flex items-center mt-2 text-xs text-secondary-500">
+                            <span>AI Assistant</span>
+                            <span class="mx-2">•</span>
+                            <span>${message.timestamp.toLocaleTimeString()}</span>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            return messageDiv;
+        }
+
+        // Download functions
+        function downloadVoiceConversation() {
+            const voiceMessages = currentConversation.messages.filter(msg => msg.type === 'voice');
+            
+            if (voiceMessages.length === 0) {
+                showStatusMessage('No voice messages to download', 'warning');
+                return;
+            }
+            
+            // Create a zip file with all voice messages
+            const zip = new JSZip();
+            const audioFolder = zip.folder("voice_messages");
+            
+            voiceMessages.forEach((message, index) => {
+                if (message.audioBlob) {
+                    audioFolder.file(`voice_message_${index + 1}.wav`, message.audioBlob);
+                }
+            });
+            
+            // Add conversation metadata
+            const metadata = {
+                conversation_id: currentConversation.id,
+                timestamp: currentConversation.timestamp,
+                mode: currentConversation.mode,
+                total_messages: voiceMessages.length
+            };
+            
+            zip.file("conversation_info.json", JSON.stringify(metadata, null, 2));
+            
+            zip.generateAsync({type:"blob"}).then(function(content) {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(content);
+                link.download = `voice_conversation_${new Date().toISOString().split('T')[0]}.zip`;
+                link.click();
+                
+                showStatusMessage('Voice conversation downloaded successfully', 'success');
+            });
+        }
+
+        function downloadTextConversation() {
+            const textMessages = currentConversation.messages.filter(msg => msg.type === 'text');
+            
+            if (textMessages.length === 0) {
+                showStatusMessage('No text messages to download', 'warning');
+                return;
+            }
+            
+            let conversationText = `AI Chat Conversation\n`;
+            conversationText += `Date: ${new Date().toLocaleDateString()}\n`;
+            conversationText += `Mode: ${currentConversation.mode}\n`;
+            conversationText += `Total Messages: ${textMessages.length}\n`;
+            conversationText += `\n${'='.repeat(50)}\n\n`;
+            
+            textMessages.forEach((message, index) => {
+                const sender = message.sender === 'user' ? 'You' : 'AI Assistant';
+                const timestamp = message.timestamp.toLocaleTimeString();
+                conversationText += `[${timestamp}] ${sender}: ${message.text}\n\n`;
+            });
+            
+            const blob = new Blob([conversationText], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `text_conversation_${new Date().toISOString().split('T')[0]}.txt`;
+            link.click();
+            
+            showStatusMessage('Text conversation downloaded successfully', 'success');
+        }
+
+        function downloadPdfConversation() {
+            // Always filter only text messages, regardless of mode
+            const textMessages = currentConversation.messages.filter(msg => msg.type === 'text');
+            if (textMessages.length === 0) {
+                showStatusMessage('No text messages to download', 'warning');
+                return;
+            }
+            let conversationText = `AI Chat Conversation\n`;
+            conversationText += `Date: ${new Date().toLocaleDateString()}\n`;
+            conversationText += `Mode: ${currentMode}\n`;
+            conversationText += `Total Messages: ${textMessages.length}\n`;
+            conversationText += `\n${'='.repeat(50)}\n\n`;
+            textMessages.forEach((message, index) => {
+                const sender = message.sender === 'user' ? 'You' : 'AI Assistant';
+                const timestamp = message.timestamp.toLocaleTimeString();
+                conversationText += `[${timestamp}] ${sender}: ${message.text}\n\n`;
+            });
+
+            // Create PDF using jsPDF
+            const doc = new window.jspdf.jsPDF();
+            const lines = doc.splitTextToSize(conversationText, 180);
+            doc.text(lines, 10, 10);
+            doc.save(`chat_conversation_${new Date().toISOString().split('T')[0]}.pdf`);
+            showStatusMessage('PDF downloaded successfully', 'success');
+        }
+
+        // Storage functions
+        function saveConversations() {
+            const existingIndex = conversations.findIndex(conv => conv.id === currentConversation.id);
+            
+            if (existingIndex !== -1) {
+                conversations[existingIndex] = currentConversation;
+            } else {
+                conversations.push(currentConversation);
+            }
+            
+            localStorage.setItem('chatConversations', JSON.stringify(conversations));
+        }
+
+        function loadConversations() {
+            // Load existing conversations if any
+            if (conversations.length > 0) {
+                const latestConversation = conversations[conversations.length - 1];
+                currentConversation = latestConversation;
+                
+                // Restore messages
+                latestConversation.messages.forEach(message => {
+                    if (message.type === 'voice') {
+                        // Note: Audio URLs won't persist across sessions
+                        // In a real app, you'd store audio files on a server
+                    } else if (message.type === 'text') {
+                        const messageElement = createTextMessageElement(message);
+                        chatMessages.appendChild(messageElement);
+                    }
+                });
+                
+                scrollToBottom();
+            }
+        }
+
+        // Utility functions
+        function showStatusMessage(message, type = 'info') {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `p-3 rounded-lg text-sm font-medium animate-scale-in`;
+            
+            switch (type) {
+                case 'success':
+                    messageDiv.classList.add('bg-success-100', 'text-success-500');
+                    break;
+                case 'error':
+                    messageDiv.classList.add('bg-error-100', 'text-error-500');
+                    break;
+                case 'warning':
+                    messageDiv.classList.add('bg-warning-100', 'text-warning-500');
+                    break;
+                default:
+                    messageDiv.classList.add('bg-primary-100', 'text-primary-600');
+            }
+            
+            messageDiv.textContent = message;
+            statusMessages.appendChild(messageDiv);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (messageDiv.parentNode) {
+                    messageDiv.parentNode.removeChild(messageDiv);
+                }
+            }, 5000);
+        }
+
+        function scrollToBottom() {
+            setTimeout(() => {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 100);
+        }
+
+        // Initialize voice mode toggle
+        voiceModeToggle.classList.add('bg-primary');
+        voiceModeSlider.classList.add('translate-x-6');
+
+
+function applyTheme(theme) {
+    document.body.classList.remove('theme-dark', 'theme-light');
+    document.body.classList.add('theme-' + theme);
+}
+
+// On page load, apply theme from localStorage (default to dark)
+document.addEventListener('DOMContentLoaded', function() {
+    const theme = localStorage.getItem('theme') || 'dark';
+    applyTheme(theme);
+});
+
+// Call this function when user changes theme in settings:
+function setTheme(theme) {
+    localStorage.setItem('theme', theme);
+    applyTheme(theme);
+
+    // Optionally, update user settings in backend if logged in
+    fetch('/api/user_settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ theme })
+    }).catch(()=>{});
+}
+    </script>
+
+    <!-- Include JSZip for file compression -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <!-- Include jsPDF for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</body>
+</html>

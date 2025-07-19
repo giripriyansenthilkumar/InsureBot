@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Terms of Service - InsureBot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <script src="{{ url_for('static', filename='dhws-data-injector.js') }}"></script>
+    <style>
+        body {
+            background: #18181b;
+            color: #f3f4f6;
+        }
+        .bg-surface, .bg-secondary-50, .bg-secondary-100, .bg-secondary-200, .bg-secondary-300 {
+            background: #23232a !important;
+        }
+        .text-text-primary, .text-secondary-600, .text-secondary-500, .text-primary, .text-accent, .text-error, .text-success {
+            color: #f3f4f6 !important;
+        }
+        .border-secondary-200, .border-secondary-300, .border-primary {
+            border-color: #444 !important;
+        }
+        .rounded-button, .rounded-full, .rounded-lg {
+            border-radius: 8px !important;
+        }
+        button, .rounded-button {
+            background: #fbbf24 !important;
+            color: #18181b !important;
+            font-weight: bold;
+            border: none;
+            box-shadow: 0 2px 8px #0006;
+            transition: background 0.2s, color 0.2s;
+        }
+        button:hover, .rounded-button:hover {
+            background: #f59e42 !important;
+            color: #fff !important;
+        }
+        .bg-primary, .bg-primary-700 {
+            background: #fbbf24 !important;
+            color: #18181b !important;
+        }
+        .bg-accent, .bg-accent-600 {
+            background: #6366f1 !important;
+            color: #fff !important;
+        }
+        .bg-error, .bg-error-600 {
+            background: #ef4444 !important;
+            color: #fff !important;
+        }
+        .bg-success, .bg-success-100 {
+            background: #22c55e !important;
+            color: #fff !important;
+        }
+        .message-bubble {
+            background: #23232a !important;
+            color: #f3f4f6 !important;
+            border-radius: 10px;
+        }
+        textarea, input[type="text"], input[type="email"], input[type="password"], select {
+            background: #18181b !important;
+            color: #f3f4f6 !important;
+            border: 1px solid #444 !important;
+        }
+        .shadow-floating {
+            box-shadow: 0 2px 8px #0006 !important;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            background: #23232a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #444;
+            border-radius: 8px;
+        }
+        .bg-black.bg-opacity-50 {
+            background: rgba(24,24,27,0.85) !important;
+        }
+        /* Content styles */
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem;
+            background: #23232a;
+            border-radius: 16px;
+            box-shadow: 0 2px 16px #0008;
+        }
+        h2 {
+            color: #fbbf24;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        section {
+            margin-bottom: 2.5rem;
+        }
+        p, li {
+            font-size: 1.08rem;
+            line-height: 1.7;
+        }
+        a.text-primary {
+            color: #fbbf24 !important;
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+</head>
+<body class="bg-background min-h-screen font-inter">
+    <header class="bg-surface shadow-subtle border-b border-secondary-200">
+        <div class="max-w-7xl mx-auto px-4 py-6">
+            <h1 class="text-2xl font-bold text-text-primary">Terms of Service</h1>
+        </div>
+    </header>
+    <main class="max-w-3xl mx-auto px-4 py-8">
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-2">Acceptance of Terms</h2>
+            <p>
+                By accessing or using VoiceChat Bot, you agree to be bound by these Terms of Service and our Privacy Policy.
+            </p>
+        </section>
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-2">User Responsibilities</h2>
+            <ul class="list-disc ml-6">
+                <li>Provide accurate and complete information during registration.</li>
+                <li>Maintain the confidentiality of your account credentials.</li>
+                <li>Use the service in compliance with all applicable laws and regulations.</li>
+            </ul>
+        </section>
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-2">Prohibited Activities</h2>
+            <ul class="list-disc ml-6">
+                <li>Reverse engineering, copying, or reselling the service.</li>
+                <li>Uploading harmful, offensive, or illegal content.</li>
+                <li>Attempting to disrupt or compromise the security of the service.</li>
+            </ul>
+        </section>
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-2">Termination</h2>
+            <p>
+                We reserve the right to suspend or terminate your access to the service at our discretion, without notice, for conduct that we believe violates these Terms.
+            </p>
+        </section>
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-2">Disclaimer</h2>
+            <p>
+                The service is provided "as is" without warranties of any kind. We do not guarantee the accuracy or reliability of any content generated by the AI.
+            </p>
+        </section>
+        <section>
+            <h2 class="text-xl font-semibold mb-2">Contact Us</h2>
+            <p>
+                For questions about these Terms, please email <a href="mailto:support@voicechatbot.com" class="text-primary underline">support@voicechatbot.com</a>.
+            </p>
+        </section>
+    </main>
+    <footer class="bg-surface border-t border-secondary-200 py-6">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center">
+            <div class="text-sm text-secondary-500 mb-4 sm:mb-0">
+                © 2025 VoiceChat Bot. All Rights Reserved.
+            </div>
+            <div class="flex space-x-6 text-sm">
+                <a href="{{ url_for('privacy_policy') }}" class="text-secondary-500 hover:text-primary transition-colors duration-200">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

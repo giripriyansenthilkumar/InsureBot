@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings - VoiceChat Bot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <script src="{{ url_for('static', filename='dhws-data-injector.js') }}"></script>
+    <style>
+        body {
+            background: #18181b;
+            color: #f3f4f6;
+        }
+        .bg-surface, .bg-secondary-50, .bg-secondary-100, .bg-secondary-200, .bg-secondary-300 {
+            background: #23232a !important;
+        }
+        .text-text-primary, .text-secondary-600, .text-secondary-500, .text-primary, .text-accent, .text-error, .text-success {
+            color: #f3f4f6 !important;
+        }
+        .border-secondary-200, .border-secondary-300, .border-primary {
+            border-color: #444 !important;
+        }
+        .rounded-button, .rounded-full, .rounded-lg {
+            border-radius: 8px !important;
+        }
+        button, .rounded-button {
+            background: #fbbf24 !important;
+            color: #18181b !important;
+            font-weight: bold;
+            border: none;
+            box-shadow: 0 2px 8px #0006;
+            transition: background 0.2s, color 0.2s;
+        }
+        button:hover, .rounded-button:hover {
+            background: #f59e42 !important;
+            color: #fff !important;
+        }
+        .bg-primary, .bg-primary-700 {
+            background: #fbbf24 !important;
+            color: #18181b !important;
+        }
+        .bg-accent, .bg-accent-600 {
+            background: #6366f1 !important;
+            color: #fff !important;
+        }
+        .bg-error, .bg-error-600 {
+            background: #ef4444 !important;
+            color: #fff !important;
+        }
+        .bg-success, .bg-success-100 {
+            background: #22c55e !important;
+            color: #fff !important;
+        }
+        .message-bubble {
+            background: #23232a !important;
+            color: #f3f4f6 !important;
+            border-radius: 10px;
+        }
+        textarea, input[type="text"], input[type="email"], input[type="password"], select {
+            background: #18181b !important;
+            color: #f3f4f6 !important;
+            border: 1px solid #444 !important;
+        }
+        .shadow-floating {
+            box-shadow: 0 2px 8px #0006 !important;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            background: #23232a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #444;
+            border-radius: 8px;
+        }
+        .bg-black.bg-opacity-50 {
+            background: rgba(24,24,27,0.85) !important;
+        }
+        /* Content styles */
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem;
+            background: #23232a;
+            border-radius: 16px;
+            box-shadow: 0 2px 16px #0008;
+        }
+        h2 {
+            color: #fbbf24;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        section {
+            margin-bottom: 2.5rem;
+        }
+        p, li {
+            font-size: 1.08rem;
+            line-height: 1.7;
+        }
+        a.text-primary {
+            color: #fbbf24 !important;
+        }
+        .settings-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #a1a1aa;
+            border-radius: 8px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .settings-nav-item.active {
+            background: #fbbf24 !important;
+            color: #18181b !important;
+            border-right: 2px solid #fbbf24;
+        }
+        .settings-section {
+            scroll-margin-top: 6rem;
+        }
+        .settings-content {
+            display: none;
+        }
+        @media (min-width: 1024px) {
+            .settings-content {
+                display: block;
+            }
+        }
+        .toggle-switch.bg-primary .toggle-dot {
+            background: #fff;
+        }
+        /* Custom range slider styles */
+        input[type="range"] {
+            -webkit-appearance: none;
+            background: transparent;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #2563EB;
+            cursor: pointer;
+            border: 2px solid #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        input[type="range"]::-moz-range-thumb {
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #2563EB;
+            cursor: pointer;
+            border: 2px solid #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fvoicechat1843back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.6"></script>
+</head>
+<body class="bg-background min-h-screen font-inter">
+    <!-- Header -->
+    <!-- Floating Save Button -->
+    <button id="saveSettingsFloatingBtn" style="position:fixed;bottom:18px;left:18px;z-index:1000;padding:6px 14px;font-size:0.85em;background:#fbbf24;color:#18181b;font-weight:bold;border:none;border-radius:6px;box-shadow:0 2px 8px #0006;transition:background 0.2s;min-width:48px;min-height:26px;" class="shadow-floating">Save</button>
+    <header class="bg-surface shadow-subtle border-b border-secondary-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Left Section - Back Button & Title -->
+                <div class="flex items-center space-x-4">
+                    <button onclick="window.history.back()" class="lg:hidden p-2 rounded-button hover:bg-secondary-100 transition-colors duration-200" title="Go back">
+                      <svg class="w-5 h-5 text-secondary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                      </svg>
+                    </button>
+                    
+                    <!-- Logo (Desktop) -->
+                    <div class="hidden lg:flex items-center">
+                        <a href="{{ url_for('main_chat_interface') }}" class="flex items-center space-x-2">
+                            <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12c0 1.54.36 3.04 1.05 4.35L2 22l5.65-1.05C9.96 21.64 11.46 22 13 22h7c1.1 0 2-.9 2-2V12c0-5.52-4.48-10-10-10zm0 18c-1.4 0-2.76-.35-4-.99L7 19l.99-1c-.64-1.24-.99-2.6-.99-4 0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z"/>
+                                </svg>
+                            </div>
+                            <span class="text-xl font-semibold text-text-primary">InsureBotBot</span>
+                        </a>
+                    </div>
+                    
+                    <!-- Page Title -->
+                    <h1 class="text-lg font-semibold text-text-primary lg:ml-8">Settings</h1>
+                </div>
+
+                <!-- Right Section - Save Indicator & Navigation -->
+                <div class="flex items-center space-x-4">
+                    <!-- Save Status Indicator -->
+                    <div id="saveStatus" class="hidden items-center space-x-2 text-sm">
+                        <div class="w-2 h-2 bg-warning rounded-full animate-pulse"></div>
+                        <span class="text-warning">Unsaved changes</span>
+                    </div>
+                    
+                    <!-- Desktop Navigation -->
+                    <nav class="hidden lg:flex items-center space-x-6">
+                        <a href="{{ url_for('main_chat_interface') }}" class="text-secondary-600 hover:text-primary transition-colors duration-200 font-medium">Chat</a>
+                    </nav>
+
+                    <!-- Profile Menu -->
+                    <div class="relative">
+                        <button id="profileMenuBtn" class="flex items-center space-x-2 p-2 rounded-button hover:bg-secondary-100 transition-colors duration-200">
+                            <img src="https://www.pngmart.com/files/23/Profile-PNG-Photo.png?auto=compress&cs=tinysrgb&w=40&h=40&fit=crop" alt="Profile" class="w-8 h-8 rounded-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=40&h=40&auto=format&fit=crop'; this.onerror=null;" />
+                            <svg class="w-4 h-4 text-secondary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        
+                        <!-- Dropdown Menu -->
+                        <div id="profileMenu" class="hidden absolute right-0 mt-2 w-48 bg-surface rounded-lg shadow-floating border border-secondary-200 py-2 z-50">
+                            <a href="user_settings.html" class="flex items-center px-4 py-2 text-sm text-text-primary hover:bg-secondary-50">
+                                <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                                Settings
+                            </a>
+                            <hr class="my-2 border-secondary-200" />
+                            <a href="{{ url_for('user_login') }}" class="flex items-center px-4 py-2 text-sm text-error hover:bg-error-100">
+                                <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                                </svg>
+                                Sign Out
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
+        <div class="lg:grid lg:grid-cols-4 lg:gap-8">
+            <!-- Save Button -->
+            <!-- <div class="w-full flex justify-end mb-4 lg:col-span-4">
+                <button id="saveSettingsBtn" class="bg-primary hover:bg-primary-700 text-white font-medium py-2 px-6 rounded-button transition-colors duration-200 shadow-floating">
+                    Save Settings
+                </button>
+            </div> -->
+            <!-- Desktop Sidebar Navigation -->
+            <div class="hidden lg:block lg:col-span-1">
+                <nav class="sticky top-24 space-y-1">
+                    <a href="#account" class="settings-nav-item active" data-section="account">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                        </svg>
+                        Account
+                    </a>
+                    <a href="#chat" class="settings-nav-item" data-section="chat">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                        </svg>
+                        Chat Preferences
+                    </a>
+                    <a href="#theme" class="settings-nav-item" data-section="theme">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"/>
+                        </svg>
+                        Theme
+                    </a>
+                    <a href="#privacy" class="settings-nav-item" data-section="privacy">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                        </svg>
+                        Privacy
+                    </a>
+                    <a href="#audio" class="settings-nav-item" data-section="audio">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                        </svg>
+                        Audio Settings
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Settings Content -->
+            <div class="lg:col-span-3">
+                <!-- Account Management Section -->
+                <section id="account-section" class="settings-section">
+                    <div class="bg-surface rounded-lg shadow-subtle border border-secondary-200 overflow-hidden">
+                        <!-- Section Header -->
+                        <div class="lg:hidden border-b border-secondary-200">
+                            <button class="settings-section-toggle w-full px-6 py-4 flex items-center justify-between text-left" data-target="account-content">
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                    </svg>
+                                    <h2 class="text-lg font-semibold text-text-primary">Account Management</h2>
+                                </div>
+                                <svg class="w-5 h-5 text-secondary-500 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Desktop Header -->
+                        <div class="hidden lg:block px-6 py-4 border-b border-secondary-200">
+                            <div class="flex items-center space-x-3">
+                                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                </svg>
+                                <h2 class="text-lg font-semibold text-text-primary">Account Management</h2>
+                            </div>
+                        </div>
+
+                        <!-- Section Content -->
+                        <div id="account-content" class="settings-content lg:block">
+                            <div class="p-6 space-y-6">
+                                <!-- Profile Information -->
+                                <div class="space-y-4">
+                                    <h3 class="text-base font-medium text-text-primary">Profile Information</h3>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div>
+                                            <label for="fullName" class="block text-sm font-medium text-text-primary mb-2">Full Name</label>
+                                            <input type="text" id="fullName" value="{{user_name}}" class="input-adaptive w-full px-4 py-3 border-secondary-300 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none" />
+                                        </div>
+                                        <div>
+                                            <label for="email" class="block text-sm font-medium text-text-primary mb-2">Email Address</label>
+                                            <input type="email" id="email" value="admin@voicechat.com" class="input-adaptive w-full px-4 py-3 border-secondary-300 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Password Change -->
+                                <div class="space-y-4">
+                                    <h3 class="text-base font-medium text-text-primary">Change Password</h3>
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label for="currentPassword" class="block text-sm font-medium text-text-primary mb-2">Current Password</label>
+                                            <div class="relative">
+                                                <input type="password" id="currentPassword" class="input-adaptive w-full px-4 py-3 pr-12 border-secondary-300 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none" placeholder="Enter current password" />
+                                                <button type="button" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-secondary-500 hover:text-text-primary">
+                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <div>
+                                                <label for="newPassword" class="block text-sm font-medium text-text-primary mb-2">New Password</label>
+                                                <input type="password" id="newPassword" class="input-adaptive w-full px-4 py-3 border-secondary-300 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none" placeholder="Enter new password" />
+                                            </div>
+                                            <div>
+                                                <label for="confirmNewPassword" class="block text-sm font-medium text-text-primary mb-2">Confirm New Password</label>
+                                                <input type="password" id="confirmNewPassword" class="input-adaptive w-full px-4 py-3 border-secondary-300 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none" placeholder="Confirm new password" />
+                                            </div>
+                                        </div>
+                                        <button class="bg-primary hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-button transition-colors duration-200">
+                                            Update Password
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Chat Preferences Section -->
+                <section id="chat-section" class="settings-section mt-6">
+                    <div class="bg-surface rounded-lg shadow-subtle border border-secondary-200 overflow-hidden">
+                        <!-- Section Header -->
+                        <div class="lg:hidden border-b border-secondary-200">
+                            <button class="settings-section-toggle w-full px-6 py-4 flex items-center justify-between text-left" data-target="chat-content">
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                                    </svg>
+                                    <h2 class="text-lg font-semibold text-text-primary">Chat Preferences</h2>
+                                </div>
+                                <svg class="w-5 h-5 text-secondary-500 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Desktop Header -->
+                        <div class="hidden lg:block px-6 py-4 border-b border-secondary-200">
+                            <div class="flex items-center space-x-3">
+                                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                                </svg>
+                                <h2 class="text-lg font-semibold text-text-primary">Chat Preferences</h2>
+                            </div>
+                        </div>
+
+                        <!-- Section Content -->
+                        <div id="chat-content" class="settings-content">
+                            <div class="p-6 space-y-6">
+                                <!-- Default Communication Mode -->
+                                <!-- <div class="space-y-4">
+                                    <h3 class="text-base font-medium text-text-primary">Default Communication Mode</h3>
+                                    <div class="space-y-3">
+                                        <label class="flex items-center">
+                                            <input type="radio" name="defaultMode" value="text" checked class="w-4 h-4 text-primary border-secondary-300 focus:ring-primary focus:ring-2" />
+                                            <span class="ml-3 text-sm text-text-primary">Text Chat</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="radio" name="defaultMode" value="voice" class="w-4 h-4 text-primary border-secondary-300 focus:ring-primary focus:ring-2" />
+                                            <span class="ml-3 text-sm text-text-primary">Voice Chat</span>
+                                        </label>
+                                    </div>
+                                </div>-->
+
+                                <!-- Auto-save Settings -->
+                                <div class="space-y-4">
+                                    <h3 class="text-base font-medium text-text-primary">Auto-save Settings</h3>
+                                    <div class="space-y-3">
+                                        <label class="flex items-center justify-between">
+                                            <span class="text-sm text-text-primary">Auto-save chat history</span>
+                                            <div class="relative">
+                                                <input type="checkbox" id="autoSaveHistory" checked class="sr-only" />
+                                                <div class="toggle-switch w-11 h-6 bg-secondary-300 rounded-full cursor-pointer transition-colors duration-200" onclick="toggleSwitch('autoSaveHistory')">
+                                                    <div class="toggle-dot w-5 h-5 bg-white rounded-full shadow-sm transform transition-transform duration-200 translate-x-5"></div>
+                                                </div>
+                                            </label>
+                                            <label class="flex items-center justify-between">
+                                                <span class="text-sm text-text-primary">Auto-export weekly summaries</span>
+                                                <div class="relative">
+                                                    <input type="checkbox" id="autoExport" class="sr-only" />
+                                                    <div class="toggle-switch w-11 h-6 bg-secondary-300 rounded-full cursor-pointer transition-colors duration-200" onclick="toggleSwitch('autoExport')">
+                                                        <div class="toggle-dot w-5 h-5 bg-white rounded-full shadow-sm transform transition-transform duration-200"></div>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Notification Preferences -->
+                                    <div class="space-y-4">
+                                        <h3 class="text-base font-medium text-text-primary">Notification Preferences</h3>
+                                        <div class="space-y-3">
+                                            <label class="flex items-center justify-between">
+                                                <span class="text-sm text-text-primary">Sound notifications</span>
+                                                <div class="relative">
+                                                    <input type="checkbox" id="soundNotifications" checked class="sr-only" />
+                                                    <div class="toggle-switch w-11 h-6 bg-secondary-300 rounded-full cursor-pointer transition-colors duration-200" onclick="toggleSwitch('soundNotifications')">
+                                                        <div class="toggle-dot w-5 h-5 bg-white rounded-full shadow-sm transform transition-transform duration-200 translate-x-5"></div>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                            <label class="flex items-center justify-between">
+                                                <span class="text-sm text-text-primary">Desktop notifications</span>
+                                                <div class="relative">
+                                                    <input type="checkbox" id="desktopNotifications" class="sr-only" />
+                                                    <div class="toggle-switch w-11 h-6 bg-secondary-300 rounded-full cursor-pointer transition-colors duration-200" onclick="toggleSwitch('desktopNotifications')">
+                                                        <div class="toggle-dot w-5 h-5 bg-white rounded-full shadow-sm transform transition-transform duration-200"></div>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Theme Customization Section -->
+                <section id="theme-section" class="settings-section mt-6">
+                    <div class="bg-surface rounded-lg shadow-subtle border border-secondary-200 overflow-hidden">
+                        <!-- Section Header -->
+                        <div class="lg:hidden border-b border-secondary-200">
+                            <button class="settings-section-toggle w-full px-6 py-4 flex items-center justify-between text-left" data-target="theme-content">
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"/>
+                                    </svg>
+                                    <h2 class="text-lg font-semibold text-text-primary">Theme Customization</h2>
+                                </div>
+                                <svg class="w-5 h-5 text-secondary-500 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Desktop Header -->
+                        <div class="hidden lg:block px-6 py-4 border-b border-secondary-200">
+                            <div class="flex items-center space-x-3">
+                                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"/>
+                                </svg>
+                                <h2 class="text-lg font-semibold text-text-primary">Theme Customization</h2>
+                            </div>
+                        </div>
+
+                        <!-- Section Content -->
+                        <div id="theme-content" class="settings-content">
+                            <div class="p-6 space-y-6">
+                                <!-- Theme Mode -->
+                                <div class="space-y-4">
+                                    <h3 class="text-base font-medium text-text-primary">Appearance Mode</h3>
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <button class="theme-option active p-4 border-2 border-primary rounded-lg bg-primary-50 transition-all duration-200" data-theme="light">
+                                            <div class="flex flex-col items-center space-y-2">
+                                                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                                                </svg>
+                                                <span class="text-sm font-medium text-primary">Light</span>
+                                            </div>
+                                        </button>
+                                        <button class="theme-option p-4 border-2 border-secondary-300 rounded-lg hover:border-primary hover:bg-primary-50 transition-all duration-200" data-theme="dark">
+                                            <div class="flex flex-col items-center space-y-2">
+                                                <svg class="w-6 h-6 text-secondary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                                                </svg>
+                                                <span class="text-sm font-medium text-secondary-600">Dark</span>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Color Scheme -->
+                                <!-- <div class="space-y-4">
+                                    <h3 class="text-base font-medium text-text-primary">Color Scheme</h3>
+                                    <div class="grid grid-cols-4 gap-3">
+                                        <button class="color-option active w-12 h-12 rounded-lg bg-primary border-2 border-primary-700 flex items-center justify-center" data-color="blue">
+                                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </button>
+                                        <button class="color-option w-12 h-12 rounded-lg bg-emerald-500 border-2 border-transparent hover:border-emerald-700 transition-colors duration-200" data-color="emerald"></button>
+                                        <button class="color-option w-12 h-12 rounded-lg bg-purple-500 border-2 border-transparent hover:border-purple-700 transition-colors duration-200" data-color="purple"></button>
+                                        <button class="color-option w-12 h-12 rounded-lg bg-rose-500 border-2 border-transparent hover:border-rose-700 transition-colors duration-200" data-color="rose"></button>
+                                    </div>
+                                </div> -->
+
+                                <!-- Font Size -->
+                                <div class="space-y-4">
+                                    <h3 class="text-base font-medium text-text-primary">Font Size</h3>
+                                    <div class="space-y-3">
+                                        <label class="flex items-center">
+                                            <input type="radio" name="fontSize" value="small" class="w-4 h-4 text-primary border-secondary-300 focus:ring-primary focus:ring-2" />
+                                            <span class="ml-3 text-sm text-text-primary">Small</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="radio" name="fontSize" value="medium" checked class="w-4 h-4 text-primary border-secondary-300 focus:ring-primary focus:ring-2" />
+                                            <span class="ml-3 text-base text-text-primary">Medium</span>
+                                        </label>
+                                        <label class="flex items-center">
+                                            <input type="radio" name="fontSize" value="large" class="w-4 h-4 text-primary border-secondary-300 focus:ring-primary focus:ring-2" />
+                                            <span class="ml-3 text-lg text-text-primary">Large</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Privacy Controls Section -->
+                <section id="privacy-section" class="settings-section mt-6">
+                    <div class="bg-surface rounded-lg shadow-subtle border border-secondary-200 overflow-hidden">
+                        <!-- Section Header -->
+                        <div class="lg:hidden border-b border-secondary-200">
+                            <button class="settings-section-toggle w-full px-6 py-4 flex items-center justify-between text-left" data-target="privacy-content">
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                                    </svg>
+                                    <h2 class="text-lg font-semibold text-text-primary">Privacy Controls</h2>
+                                </div>
+                                <svg class="w-5 h-5 text-secondary-500 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Desktop Header -->
+                        <div class="hidden lg:block px-6 py-4 border-b border-secondary-200">
+                            <div class="flex items-center space-x-3">
+                                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                                </svg>
+                                <h2 class="text-lg font-semibold text-text-primary">Privacy Controls</h2>
+                            </div>
+                        </div>
+
+                        <!-- Section Content -->
+                        <div id="privacy-content" class="settings-content">
+                            <div class="p-6 space-y-6">
+                                <!-- Data Retention -->
+                                <div class="space-y-4">
+                                    <h3 class="text-base font-medium text-text-primary">Data Retention</h3>
+                                    <div class="space-y-3">
+                                        <label for="retentionPeriod" class="block text-sm font-medium text-text-primary">Chat history retention period</label>
+                                        <select id="retentionPeriod" class="input-adaptive w-full px-4 py-3 border-secondary-300 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none">
+                                            <option value="30">30 days</option>
+                                            <option value="90" selected>90 days</option>
+                                            <option value="180">6 months</option>
+                                            <option value="365">1 year</option>
+                                            <option value="forever">Forever</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Export Options -->
+                                <div class="space-y-4">
+                                    <h3 class="text-base font-medium text-text-primary">Export Data</h3>
+                                    <div class="space-y-3">
+                                        <button class="w-full sm:w-auto bg-primary hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-button transition-colors duration-200 flex items-center justify-center">
+                                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                            </svg>
+                                            Export All Chat Data
+                                        </button>
+                                        <button class="w-full sm:w-auto bg-secondary-100 hover:bg-secondary-200 text-text-primary font-medium py-2 px-4 rounded-button transition-colors duration-200 flex items-center justify-center">
+                                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                            </svg>
+                                            Export Voice Recordings
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Account Deletion -->
+                                <div class="space-y-4">
+                                    <h3 class="text-base font-medium text-text-primary">Account Deletion</h3>
+                                    <div class="p-4" style="background: #2d1a1a; border: 1px solid #ef4444; border-radius: 12px;">
+                                        <p class="text-sm text-error mb-3">
+                                            <strong>Warning:</strong> This action cannot be undone. All your data will be permanently deleted.
+                                        </p>
+                                        <button class="bg-error hover:bg-red-600 text-white font-medium py-2 px-4 rounded-button transition-colors duration-200">
+                                            Delete Account
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Audio Settings Section -->
+                <section id="audio-section" class="settings-section mt-6">
+                    <div class="bg-surface rounded-lg shadow-subtle border border-secondary-200 overflow-hidden">
+                        <!-- Section Header -->
+                        <div class="lg:hidden border-b border-secondary-200">
+                            <button class="settings-section-toggle w-full px-6 py-4 flex items-center justify-between text-left" data-target="audio-content">
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                                    </svg>
+                                    <h2 class="text-lg font-semibold text-text-primary">Audio Settings</h2>
+                                </div>
+                                <svg class="w-5 h-5 text-secondary-500 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Desktop Header -->
+                        <div class="hidden lg:block px-6 py-4 border-b border-secondary-200">
+                            <div class="flex items-center space-x-3">
+                                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                                </svg>
+                                <h2 class="text-lg font-semibold text-text-primary">Audio Settings</h2>
+                            </div>
+                        </div>
+
+                        <!-- Section Content -->
+                        <div id="audio-content" class="settings-content">
+                            <div class="p-6 space-y-6">
+                                <!-- Microphone Settings -->
+                                <div class="space-y-4">
+                                    <h3 class="text-base font-medium text-text-primary">Microphone</h3>
+                                    <div class="space-y-3">
+                                        <label for="microphoneDevice" class="block text-sm font-medium text-text-primary">Microphone Device</label>
+                                        <select id="microphoneDevice" class="input-adaptive w-full px-4 py-3 border-secondary-300 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none">
+                                            <option value="default">Default Microphone</option>
+                                            <option value="built-in">Built-in Microphone</option>
+                                            <option value="external">External Microphone</option>
+                                        </select>
+                                        
+                                        <!-- Microphone Test -->
+                                        <div class="flex items-center space-x-3">
+                                            <button id="micTestBtn" class="bg-secondary-100 hover:bg-secondary-200 text-text-primary font-medium py-2 px-4 rounded-button transition-colors duration-200">
+                                                Test Microphone
+                                            </button>
+                                            <div id="micLevel" class="flex-1 bg-secondary-200 rounded-full h-2">
+                                                <div class="h-2 bg-success rounded-full transition-all duration-100" style="width: 0%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Playback Settings -->
+                                <div class="space-y-4">
+                                    <h3 class="text-base font-medium text-text-primary">Playback</h3>
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label for="playbackVolume" class="block text-sm font-medium text-text-primary mb-2">Playback Volume</label>
+                                            <div class="flex items-center space-x-3">
+                                                <svg class="w-4 h-4 text-secondary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 14.142M5 15h4l5 5V4L9 9H5v6z"/>
+                                                </svg>
+                                                <input type="range" id="playbackVolume" min="0" max="100" value="75" class="flex-1 h-2 bg-secondary-200 rounded-lg appearance-none cursor-pointer" />
+                                                <span id="volumeValue" class="text-sm text-secondary-600 w-8">75%</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div>
+                                            <label for="voiceSpeed" class="block text-sm font-medium text-text-primary mb-2">Voice Speed</label>
+                                            <div class="flex items-center space-x-3">
+                                                <span class="text-sm text-secondary-600">Slow</span>
+                                                <input type="range" id="voiceSpeed" min="0.5" max="2" step="0.1" value="1" class="flex-1 h-2 bg-secondary-200 rounded-lg appearance-none cursor-pointer" />
+                                                <span class="text-sm text-secondary-600">Fast</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Voice Recognition -->
+                                <div class="space-y-4">
+                                    <h3 class="text-base font-medium text-text-primary">Voice Recognition</h3>
+                                    <div class="space-y-3">
+                                        <label for="recognitionLanguage" class="block text-sm font-medium text-text-primary">Recognition Language</label>
+                                        <select id="recognitionLanguage" class="input-adaptive w-full px-4 py-3 border-secondary-300 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none">
+                                            <option value="en-US" selected>English (US)</option>
+                                            <option value="en-GB">English (UK)</option>
+                                            <option value="es-ES">Spanish</option>
+                                            <option value="fr-FR">French</option>
+                                            <option value="de-DE">German</option>
+                                        </select>
+                                        
+                                        <label class="flex items-center justify-between">
+                                            <span class="text-sm text-text-primary">Continuous listening</span>
+                                            <div class="relative">
+                                                <input type="checkbox" id="continuousListening" class="sr-only" />
+                                                <div class="toggle-switch w-11 h-6 bg-secondary-300 rounded-full cursor-pointer transition-colors duration-200" onclick="toggleSwitch('continuousListening')">
+                                                    <div class="toggle-dot w-5 h-5 bg-white rounded-full shadow-sm transform transition-transform duration-200"></div>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="lg:hidden fixed bottom-0 left-0 right-0 bg-surface border-t border-secondary-200 px-4 py-2">
+        <div class="flex justify-around">
+            <a href="main_chat_interface.html" class="flex flex-col items-center py-2 px-3 text-secondary-600 hover:text-primary transition-colors duration-200">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                </svg>
+                <span class="text-xs mt-1">Chat</span>
+            </a>
+            <a href="chat_history.html" class="flex flex-col items-center py-2 px-3 text-secondary-600 hover:text-primary transition-colors duration-200">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <span class="text-xs mt-1">History</span>
+            </a>
+            <a href="user_settings.html" class="flex flex-col items-center py-2 px-3 text-primary">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                <span class="text-xs mt-1">Settings</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Footer -->
+    <footer class="bg-surface border-t border-secondary-200 py-6 mt-12 mb-16 lg:mb-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row justify-between items-center">
+                <div class="text-sm text-secondary-500 mb-4 sm:mb-0">
+                    © 2025 VoiceChat Bot. All Rights Reserved.
+                </div>
+                <div class="flex space-x-6 text-sm">
+                    <a href="{{ url_for('privacy_policy') }}" class="text-secondary-500 hover:text-primary transition-colors duration-200">Privacy Policy</a>
+                    <a href="{{ url_for('terms_of_service') }}" class="text-secondary-500 hover:text-primary transition-colors duration-200">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/api/user_settings')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.settings) {
+                        const s = data.settings;
+                        document.getElementById('fullName').value = s.fullName || '';
+                        document.getElementById('email').value = s.email || '';
+                        document.querySelector(`input[name="defaultMode"][value="${s.defaultMode || 'text'}"]`).checked = true;
+                        document.getElementById('autoSaveHistory').checked = !!s.autoSaveHistory;
+                        document.getElementById('autoExport').checked = !!s.autoExport;
+                        document.getElementById('soundNotifications').checked = !!s.soundNotifications;
+                        document.getElementById('desktopNotifications').checked = !!s.desktopNotifications;
+                        document.getElementById('retentionPeriod').value = s.retentionPeriod || '90';
+                        document.getElementById('microphoneDevice').value = s.microphoneDevice || 'default';
+                        document.getElementById('recognitionLanguage').value = s.recognitionLanguage || 'en-US';
+                        document.querySelector(`input[name="fontSize"][value="${s.fontSize || 'medium'}"]`).checked = true;
+                        // Theme and color scheme logic as needed
+                    }
+                });
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Floating Save button logic
+            const saveFloatingBtn = document.getElementById('saveSettingsFloatingBtn');
+            saveFloatingBtn.addEventListener('click', function() {
+                // Gather settings
+                const settings = {
+                    fullName: document.getElementById('fullName')?.value || '',
+                    email: document.getElementById('email')?.value || '',
+                    defaultMode: document.querySelector('input[name="defaultMode"]:checked')?.value || 'text',
+                    autoSaveHistory: document.getElementById('autoSaveHistory')?.checked || false,
+                    autoExport: document.getElementById('autoExport')?.checked || false,
+                    soundNotifications: document.getElementById('soundNotifications')?.checked || false,
+                    desktopNotifications: document.getElementById('desktopNotifications')?.checked || false,
+                    retentionPeriod: document.getElementById('retentionPeriod')?.value || '90',
+                    microphoneDevice: document.getElementById('microphoneDevice')?.value || 'default',
+                    recognitionLanguage: document.getElementById('recognitionLanguage')?.value || 'en-US',
+                    fontSize: document.querySelector('input[name="fontSize"]:checked')?.value || 'medium',
+                    theme: document.querySelector('.theme-option.active')?.getAttribute('data-theme') || 'light',
+                    colorScheme: document.querySelector('.color-option.active')?.getAttribute('data-color') || 'blue',
+                };
+                localStorage.setItem('userSettings', JSON.stringify(settings));
+                showSaveIndicator(true);
+            });
+            // Save button logic
+            const saveBtn = document.getElementById('saveSettingsBtn');
+            saveBtn.addEventListener('click', function() {
+                // Gather settings
+                const settings = {
+                    fullName: document.getElementById('fullName')?.value || '',
+                    email: document.getElementById('email')?.value || '',
+                    defaultMode: document.querySelector('input[name="defaultMode"]:checked')?.value || 'text',
+                    autoSaveHistory: document.getElementById('autoSaveHistory')?.checked || false,
+                    autoExport: document.getElementById('autoExport')?.checked || false,
+                    soundNotifications: document.getElementById('soundNotifications')?.checked || false,
+                    desktopNotifications: document.getElementById('desktopNotifications')?.checked || false,
+                    retentionPeriod: document.getElementById('retentionPeriod')?.value || '90',
+                    microphoneDevice: document.getElementById('microphoneDevice')?.value || 'default',
+                    recognitionLanguage: document.getElementById('recognitionLanguage')?.value || 'en-US',
+                    fontSize: document.querySelector('input[name="fontSize"]:checked')?.value || 'medium',
+                    theme: document.querySelector('.theme-option.active')?.getAttribute('data-theme') || 'light',
+                    colorScheme: document.querySelector('.color-option.active')?.getAttribute('data-color') || 'blue',
+                };
+                localStorage.setItem('userSettings', JSON.stringify(settings));
+                showSaveIndicator(true);
+            });
+            // Profile menu toggle
+            const profileMenuBtn = document.getElementById('profileMenuBtn');
+            const profileMenu = document.getElementById('profileMenu');
+
+            profileMenuBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                profileMenu.classList.toggle('hidden');
+            });
+
+            // Close profile menu when clicking outside
+            document.addEventListener('click', function() {
+                profileMenu.classList.add('hidden');
+            });
+
+            // Sidebar navigation scroll to section
+            const navItems = document.querySelectorAll('.settings-nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetSection = this.getAttribute('data-section');
+                    const section = document.getElementById(targetSection + '-section');
+                    if (section) {
+                        // Remove hash from URL without reloading
+                        history.replaceState(null, '', window.location.pathname);
+                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                    // Update active nav item
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // Desktop sidebar navigation
+            const sections = document.querySelectorAll('.settings-section');
+
+            navItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetSection = this.getAttribute('data-section');
+                    
+                    // Update active nav item
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show target section
+                    sections.forEach(section => {
+                        if (section.id === targetSection + '-section') {
+                            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    });
+                });
+            });
+
+            // Mobile collapsible sections
+            const sectionToggles = document.querySelectorAll('.settings-section-toggle');
+            
+            sectionToggles.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    const targetContent = document.getElementById(targetId);
+                    const arrow = this.querySelector('svg:last-child');
+                    
+                    targetContent.classList.toggle('hidden');
+                    arrow.classList.toggle('rotate-180');
+                });
+            });
+
+            // Toggle switches
+            window.toggleSwitch = function(switchId) {
+                const checkbox = document.getElementById(switchId);
+                const toggleSwitch = checkbox.nextElementSibling;
+                const toggleDot = toggleSwitch.querySelector('.toggle-dot');
+                
+                checkbox.checked = !checkbox.checked;
+                
+                if (checkbox.checked) {
+                    toggleSwitch.classList.remove('bg-secondary-300');
+                    toggleSwitch.classList.add('bg-primary');
+                    toggleDot.classList.add('translate-x-5');
+                } else {
+                    toggleSwitch.classList.remove('bg-primary');
+                    toggleSwitch.classList.add('bg-secondary-300');
+                    toggleDot.classList.remove('translate-x-5');
+                }
+                
+                showSaveIndicator();
+            };
+
+            // Theme selection
+            const themeOptions = document.querySelectorAll('.theme-option');
+            themeOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    themeOptions.forEach(opt => {
+                        opt.classList.remove('active', 'border-primary', 'bg-primary-50');
+                        opt.classList.add('border-secondary-300');
+                        opt.querySelector('span').classList.remove('text-primary');
+                        opt.querySelector('span').classList.add('text-secondary-600');
+                        opt.querySelector('svg').classList.remove('text-primary');
+                        opt.querySelector('svg').classList.add('text-secondary-600');
+                    });
+                    
+                    this.classList.add('active', 'border-primary', 'bg-primary-50');
+                    this.classList.remove('border-secondary-300');
+                    this.querySelector('span').classList.add('text-primary');
+                    this.querySelector('span').classList.remove('text-secondary-600');
+                    this.querySelector('svg').classList.add('text-primary');
+                    this.querySelector('svg').classList.remove('text-secondary-600');
+                    
+                    showSaveIndicator();
+                });
+            });
+
+            // Color scheme selection
+            const colorOptions = document.querySelectorAll('.color-option');
+            colorOptions.forEach(function(option) {
+                option.addEventListener('click', function() {
+                    colorOptions.forEach(function(opt) {
+                        opt.classList.remove('active');
+                        opt.innerHTML = '';
+                    });
+                    this.classList.add('active');
+                    this.innerHTML = '<svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>';
+            showSaveIndicator();
+                });
+            });
+
+            // Save indicator
+            function showSaveIndicator(isManual = false) {
+                const saveStatus = document.getElementById('saveStatus');
+                saveStatus.classList.remove('hidden');
+                saveStatus.classList.add('flex');
+                if (isManual) {
+                    saveStatus.innerHTML = '<div class="w-2 h-2 bg-success rounded-full"></div><span class="text-success">Settings saved</span>';
+                    setTimeout(() => {
+                        saveStatus.classList.add('hidden');
+                        saveStatus.classList.remove('flex');
+                        saveStatus.innerHTML = '<div class="w-2 h-2 bg-warning rounded-full animate-pulse"></div><span class="text-warning">Unsaved changes</span>';
+                    }, 2000);
+                } else {
+                    // Auto-save after 2 seconds
+                    setTimeout(() => {
+                        saveStatus.innerHTML = '<div class="w-2 h-2 bg-success rounded-full"></div><span class="text-success">Saved</span>';
+                        setTimeout(() => {
+                            saveStatus.classList.add('hidden');
+                            saveStatus.classList.remove('flex');
+                            saveStatus.innerHTML = '<div class="w-2 h-2 bg-warning rounded-full animate-pulse"></div><span class="text-warning">Unsaved changes</span>';
+                        }, 2000);
+                    }, 2000);
+                }
+            }
+
+            // Form change detection
+            const inputs = document.querySelectorAll('input, select');
+            inputs.forEach(input => {
+                input.addEventListener('change', showSaveIndicator);
+            });
+        });
+    </script>
+
+    <script>
+function applyTheme(theme) {
+    document.body.classList.remove('theme-dark', 'theme-light');
+    document.body.classList.add('theme-' + theme);
+}
+
+// On page load, apply theme from localStorage (default to dark)
+document.addEventListener('DOMContentLoaded', function() {
+    const theme = localStorage.getItem('theme') || 'dark';
+    applyTheme(theme);
+});
+
+// Call this function when user changes theme in settings:
+function setTheme(theme) {
+    localStorage.setItem('theme', theme);
+    applyTheme(theme);
+
+    // Optionally, update user settings in backend if logged in
+    fetch('/api/user_settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ theme })
+    }).catch(()=>{});
+}
+</script>
+
+    <style>
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+        }
+        /* Tailwind @apply removed for compatibility. Use classes in HTML. */
+        .settings-nav-item { /* ...use classes in HTML... */ }
+        .settings-nav-item.active { /* ...use classes in HTML... */ }
+        .settings-content { /* ...use classes in HTML... */ }
+        @media (min-width: 1024px) {
+            .settings-content {
+                display: block;
+            }
+        }
+        .toggle-switch.bg-primary .toggle-dot { /* ...use classes in HTML... */ }
+        /* ...existing code... */
+    </style>
+</body>
+</html>

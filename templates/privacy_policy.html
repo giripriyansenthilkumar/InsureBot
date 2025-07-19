@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy Policy - InsureBot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <script src="{{ url_for('static', filename='dhws-data-injector.js') }}"></script>
+    <style>
+        body {
+            background: #18181b;
+            color: #f3f4f6;
+        }
+        .bg-surface, .bg-secondary-50, .bg-secondary-100, .bg-secondary-200, .bg-secondary-300 {
+            background: #23232a !important;
+        }
+        .text-text-primary, .text-secondary-600, .text-secondary-500, .text-primary, .text-accent, .text-error, .text-success {
+            color: #f3f4f6 !important;
+        }
+        .border-secondary-200, .border-secondary-300, .border-primary {
+            border-color: #444 !important;
+        }
+        .rounded-button, .rounded-full, .rounded-lg {
+            border-radius: 8px !important;
+        }
+        button, .rounded-button {
+            background: #fbbf24 !important;
+            color: #18181b !important;
+            font-weight: bold;
+            border: none;
+            box-shadow: 0 2px 8px #0006;
+            transition: background 0.2s, color 0.2s;
+        }
+        button:hover, .rounded-button:hover {
+            background: #f59e42 !important;
+            color: #fff !important;
+        }
+        .bg-primary, .bg-primary-700 {
+            background: #fbbf24 !important;
+            color: #18181b !important;
+        }
+        .bg-accent, .bg-accent-600 {
+            background: #6366f1 !important;
+            color: #fff !important;
+        }
+        .bg-error, .bg-error-600 {
+            background: #ef4444 !important;
+            color: #fff !important;
+        }
+        .bg-success, .bg-success-100 {
+            background: #22c55e !important;
+            color: #fff !important;
+        }
+        .message-bubble {
+            background: #23232a !important;
+            color: #f3f4f6 !important;
+            border-radius: 10px;
+        }
+        textarea, input[type="text"], input[type="email"], input[type="password"], select {
+            background: #18181b !important;
+            color: #f3f4f6 !important;
+            border: 1px solid #444 !important;
+        }
+        .shadow-floating {
+            box-shadow: 0 2px 8px #0006 !important;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            background: #23232a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #444;
+            border-radius: 8px;
+        }
+        .bg-black.bg-opacity-50 {
+            background: rgba(24,24,27,0.85) !important;
+        }
+        /* Content styles */
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem;
+            background: #23232a;
+            border-radius: 16px;
+            box-shadow: 0 2px 16px #0008;
+        }
+        h2 {
+            color: #fbbf24;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        section {
+            margin-bottom: 2.5rem;
+        }
+        p, li {
+            font-size: 1.08rem;
+            line-height: 1.7;
+        }
+        a.text-primary {
+            color: #fbbf24 !important;
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+</head>
+<body class="bg-background min-h-screen font-inter">
+    <header class="bg-surface shadow-subtle border-b border-secondary-200">
+        <div class="max-w-7xl mx-auto px-4 py-6">
+            <h1 class="text-2xl font-bold text-text-primary">Privacy Policy</h1>
+        </div>
+    </header>
+    <main class="max-w-3xl mx-auto px-4 py-8">
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-2">Introduction</h2>
+            <p>
+                VoiceChat Bot is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you use our services.
+            </p>
+        </section>
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-2">Information We Collect</h2>
+            <ul class="list-disc ml-6">
+                <li><strong>Personal Information:</strong> Such as your name, email address, and login credentials when you register or sign in.</li>
+                <li><strong>Usage Data:</strong> Information about how you use our services, including chat logs and voice recordings.</li>
+                <li><strong>Device Information:</strong> Such as browser type, operating system, and IP address.</li>
+            </ul>
+        </section>
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-2">How We Use Your Information</h2>
+            <ul class="list-disc ml-6">
+                <li>To provide and maintain our services</li>
+                <li>To improve user experience and our offerings</li>
+                <li>To communicate with you about updates or support</li>
+                <li>To ensure security and prevent fraud</li>
+            </ul>
+        </section>
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-2">Data Security</h2>
+            <p>
+                We implement industry-standard security measures to protect your data. However, no method of transmission over the Internet is 100% secure.
+            </p>
+        </section>
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-2">Your Rights</h2>
+            <p>
+                You may access, update, or delete your personal information at any time by contacting us or using your account settings.
+            </p>
+        </section>
+        <section>
+            <h2 class="text-xl font-semibold mb-2">Contact Us</h2>
+            <p>
+                If you have any questions about this Privacy Policy, please email us at <a href="mailto:support@voicechatbot.com" class="text-primary underline">support@voicechatbot.com</a>.
+            </p>
+        </section>
+    </main>
+    <footer class="bg-surface border-t border-secondary-200 py-6">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center">
+            <div class="text-sm text-secondary-500 mb-4 sm:mb-0">
+                © 2025 VoiceChat Bot. All Rights Reserved.
+            </div>
+            <div class="flex space-x-6 text-sm">
+                <a href="{{ url_for('terms_of_service') }}" class="text-secondary-500 hover:text-primary transition-colors duration-200">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

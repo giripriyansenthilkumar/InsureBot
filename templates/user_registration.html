@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Account - VoiceChat Bot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <script src="{{ url_for('static', filename='dhws-data-injector.js') }}"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fvoicechat1843back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.6"></script>
+</head>
+<body class="bg-background min-h-screen font-inter">
+    <!-- Header -->
+    <header class="bg-surface shadow-subtle border-b border-secondary-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="main_chat_interface.html" class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12c0 1.54.36 3.04 1.05 4.35L2 22l5.65-1.05C9.96 21.64 11.46 22 13 22h7c1.1 0 2-.9 2-2V12c0-5.52-4.48-10-10-10zm0 18c-1.4 0-2.76-.35-4-.99L7 19l.99-1c-.64-1.24-.99-2.6-.99-4 0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z"/>
+                            </svg>
+                        </div>
+                        <span class="text-xl font-semibold text-text-primary">VoiceChat Bot</span>
+                    </a>
+                </div>
+                
+                <!-- Sign In Link -->
+                <div class="flex items-center">
+                    <a href="{{ url_for('user_login') }}" class="text-secondary-600 hover:text-primary transition-colors duration-200 font-medium">
+                        Sign In
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex items-center justify-center px-4 py-8 sm:py-12">
+        <div class="w-full max-w-md">
+            <!-- Registration Form Container -->
+            <div class="bg-surface rounded-lg shadow-floating p-6 sm:p-8 border border-secondary-200">
+                <!-- Header -->
+                <div class="text-center mb-8">
+                    <h1 class="text-2xl sm:text-3xl font-semibold text-text-primary mb-2">Create Account</h1>
+                    <p class="text-secondary-500">Join VoiceChat Bot to start your AI conversation journey</p>
+                </div>
+
+                <!-- Social Registration Options -->
+                <!--<div class="space-y-3 mb-6">
+                    <button class="w-full flex items-center justify-center px-4 py-3 border border-secondary-300 rounded-button bg-surface hover:bg-secondary-50 transition-colors duration-200 font-medium text-text-primary">
+                        <img src="https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?q=80&w=32&h=32&auto=format&fit=crop" alt="Google" class="w-5 h-5 mr-3" onerror="this.src='https://images.unsplash.com/photo-1611224923853-80b023f02d71?q=80&w=32&h=32&auto=format&fit=crop'; this.onerror=null;" />
+                        Continue with Google
+                    </button>
+                    <button class="w-full flex items-center justify-center px-4 py-3 border border-secondary-300 rounded-button bg-surface hover:bg-secondary-50 transition-colors duration-200 font-medium text-text-primary">
+                        <img src="https://images.unsplash.com/photo-1621768216002-5ac171876625?q=80&w=32&h=32&auto=format&fit=crop" alt="Apple" class="w-5 h-5 mr-3" onerror="this.src='https://images.unsplash.com/photo-1611224923853-80b023f02d71?q=80&w=32&h=32&auto=format&fit=crop'; this.onerror=null;" />
+                        Continue with Apple
+                    </button>
+                </div> -->
+
+                <!-- Divider -->
+                <!-- <div class="relative mb-6">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-secondary-200"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-2 bg-surface text-secondary-500">Or continue with email</span>
+                    </div>
+                </div> -->
+
+                <!-- Registration Form -->
+                <form id="registrationForm" class="space-y-5">
+                    <!-- Full Name Field -->
+                    <div>
+                        <label for="fullName" class="block text-sm font-medium text-text-primary mb-2">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" required class="input-adaptive w-full px-4 py-3 border-secondary-300 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none" placeholder="Enter your full name" />
+                        <div id="fullNameError" class="hidden text-error text-sm mt-1"></div>
+                    </div>
+
+                    <!-- Email Field -->
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-text-primary mb-2">Email Address</label>
+                        <input type="email" id="email" name="email" required class="input-adaptive w-full px-4 py-3 border-secondary-300 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none" placeholder="Enter your email address" />
+                        <div id="emailError" class="hidden text-error text-sm mt-1"></div>
+                    </div>
+
+                    <!-- Password Field -->
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-text-primary mb-2">Password</label>
+                        <div class="relative">
+                            <input type="password" id="password" name="password" required class="input-adaptive w-full px-4 py-3 pr-12 border-secondary-300 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none" placeholder="Create a strong password" />
+                            <button type="button" id="togglePassword" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-secondary-500 hover:text-text-primary">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <!-- Password Strength Meter -->
+                        <div class="mt-2">
+                            <div class="flex items-center space-x-2">
+                                <div class="flex-1 bg-secondary-200 rounded-full h-2">
+                                    <div id="passwordStrength" class="h-2 rounded-full transition-all duration-300 bg-error" style="width: 0%"></div>
+                                </div>
+                                <span id="passwordStrengthText" class="text-xs text-secondary-500">Weak</span>
+                            </div>
+                            <div class="mt-2 text-xs text-secondary-500">
+                                <p>Password must contain:</p>
+                                <ul class="list-disc list-inside mt-1 space-y-1">
+                                    <li id="lengthReq" class="text-error">At least 8 characters</li>
+                                    <li id="upperReq" class="text-error">One uppercase letter</li>
+                                    <li id="lowerReq" class="text-error">One lowercase letter</li>
+                                    <li id="numberReq" class="text-error">One number</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div id="passwordError" class="hidden text-error text-sm mt-1"></div>
+                    </div>
+
+                    <!-- Confirm Password Field -->
+                    <div>
+                        <label for="confirmPassword" class="block text-sm font-medium text-text-primary mb-2">Confirm Password</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" required class="input-adaptive w-full px-4 py-3 border-secondary-300 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none" placeholder="Confirm your password" />
+                        <div id="confirmPasswordError" class="hidden text-error text-sm mt-1"></div>
+                    </div>
+
+                    <!-- Terms and Privacy -->
+                    <div class="flex items-start">
+                        <input type="checkbox" id="terms" name="terms" required class="mt-1 w-4 h-4 text-primary border-secondary-300 rounded focus:ring-primary focus:ring-2" />
+                        <label for="terms" class="ml-3 text-sm text-secondary-600">
+                            I agree to the 
+                            <a href="{{ url_for('terms_of_service') }}" class="text-primary hover:text-primary-700 underline">Terms of Service</a> 
+                            and 
+                            <a href="{{ url_for('privacy_policy') }}" class="text-primary hover:text-primary-700 underline">Privacy Policy</a>
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" id="submitBtn" class="w-full bg-primary hover:bg-primary-700 text-white font-medium py-3 px-4 rounded-button transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50">
+                        <span id="submitText">Create Account</span>
+                        <svg id="loadingSpinner" class="hidden animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                        </svg>
+                    </button>
+                </form>
+
+                <!-- Sign In Link -->
+                <div class="mt-6 text-center">
+                    <p class="text-secondary-600">
+                        Already have an account? 
+                        <a href="{{ url_for('user_login') }}" class="text-primary hover:text-primary-700 font-medium underline">Sign In</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Trust Signals -->
+            <div class="mt-6 text-center">
+                <div class="flex items-center justify-center space-x-4 text-xs text-secondary-500">
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 mr-1 text-success" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm0 0V7a3 3 0 016 0v2m-6 0h6" clip-rule="evenodd"/>
+                        </svg>
+                        SSL Secured
+                    </div>
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 mr-1 text-success" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        Privacy Protected
+                    </div>
+                </div>
+                <p class="mt-2 text-xs text-secondary-500">
+                    Your data is encrypted and never shared with third parties
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-surface border-t border-secondary-200 py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row justify-between items-center">
+                <div class="text-sm text-secondary-500 mb-4 sm:mb-0">
+                    © 2025 VoiceChat Bot. All Rights Reserved.
+                </div>
+                <div class="flex space-x-6 text-sm">
+                    <a href="{{ url_for('privacy_policy') }}" class="text-secondary-500 hover:text-primary transition-colors duration-200">Privacy Policy</a>
+                    <a href="{{ url_for('terms_of_service') }}" class="text-secondary-500 hover:text-primary transition-colors duration-200">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Form validation and interaction logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('registrationForm');
+            const fullNameInput = document.getElementById('fullName');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            const togglePasswordBtn = document.getElementById('togglePassword');
+            const submitBtn = document.getElementById('submitBtn');
+            const submitText = document.getElementById('submitText');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+
+            // Password visibility toggle
+            togglePasswordBtn.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                
+                // Update icon
+                const icon = type === 'password' ? 
+                    '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>' :
+                    '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L8.464 8.464m1.414 1.414L8.464 8.464m5.656 5.656l1.415 1.415m-1.415-1.415l-1.414-1.414"></path>';
+                togglePasswordBtn.querySelector('svg').innerHTML = icon;
+            });
+
+            // Password strength checker
+            passwordInput.addEventListener('input', function() {
+                const password = this.value;
+                const strengthBar = document.getElementById('passwordStrength');
+                const strengthText = document.getElementById('passwordStrengthText');
+                
+                // Requirements
+                const lengthReq = document.getElementById('lengthReq');
+                const upperReq = document.getElementById('upperReq');
+                const lowerReq = document.getElementById('lowerReq');
+                const numberReq = document.getElementById('numberReq');
+                
+                let score = 0;
+                
+                // Check length
+                if (password.length >= 8) {
+                    lengthReq.className = 'text-success';
+                    score++;
+                } else {
+                    lengthReq.className = 'text-error';
+                }
+                
+                // Check uppercase
+                if (/[A-Z]/.test(password)) {
+                    upperReq.className = 'text-success';
+                    score++;
+                } else {
+                    upperReq.className = 'text-error';
+                }
+                
+                // Check lowercase
+                if (/[a-z]/.test(password)) {
+                    lowerReq.className = 'text-success';
+                    score++;
+                } else {
+                    lowerReq.className = 'text-error';
+                }
+                
+                // Check number
+                if (/[0-9]/.test(password)) {
+                    numberReq.className = 'text-success';
+                    score++;
+                } else {
+                    numberReq.className = 'text-error';
+                }
+                
+                // Update strength bar
+                const percentage = (score / 4) * 100;
+                strengthBar.style.width = percentage + '%';
+                
+                if (score === 0) {
+                    strengthBar.className = 'h-2 rounded-full transition-all duration-300 bg-error';
+                    strengthText.textContent = 'Weak';
+                } else if (score <= 2) {
+                    strengthBar.className = 'h-2 rounded-full transition-all duration-300 bg-warning';
+                    strengthText.textContent = 'Fair';
+                } else if (score === 3) {
+                    strengthBar.className = 'h-2 rounded-full transition-all duration-300 bg-accent';
+                    strengthText.textContent = 'Good';
+                } else {
+                    strengthBar.className = 'h-2 rounded-full transition-all duration-300 bg-success';
+                    strengthText.textContent = 'Strong';
+                }
+            });
+
+            // Real-time validation
+            function validateField(input, errorElement, validator) {
+                input.addEventListener('blur', function() {
+                    const error = validator(this.value);
+                    if (error) {
+                        errorElement.textContent = error;
+                        errorElement.classList.remove('hidden');
+                        input.classList.add('border-error');
+                    } else {
+                        errorElement.classList.add('hidden');
+                        input.classList.remove('border-error');
+                    }
+                });
+            }
+
+            // Validators
+            validateField(fullNameInput, document.getElementById('fullNameError'), function(value) {
+                if (!value.trim()) return 'Full name is required';
+                if (value.trim().length < 2) return 'Full name must be at least 2 characters';
+                return null;
+            });
+
+            validateField(emailInput, document.getElementById('emailError'), function(value) {
+                if (!value) return 'Email is required';
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(value)) return 'Please enter a valid email address';
+                return null;
+            });
+
+            validateField(confirmPasswordInput, document.getElementById('confirmPasswordError'), function(value) {
+                if (!value) return 'Please confirm your password';
+                if (value !== passwordInput.value) return 'Passwords do not match';
+                return null;
+            });
+
+            // Form submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Show loading state
+                submitText.textContent = 'Creating Account...';
+                loadingSpinner.classList.remove('hidden');
+                submitBtn.disabled = true;
+
+                // Gather form data
+                const name = fullNameInput.value.trim();
+                const email = emailInput.value.trim();
+                const password = passwordInput.value;
+                const confirmPassword = confirmPasswordInput.value;
+
+                // Basic validation (already handled above, but double-check)
+                if (!name || !email || !password || !confirmPassword || password !== confirmPassword) {
+                    submitText.textContent = 'Create Account';
+                    loadingSpinner.classList.add('hidden');
+                    submitBtn.disabled = false;
+                    return;
+                }
+
+                // Send registration data to backend
+                fetch('/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, email, password })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    submitText.textContent = 'Create Account';
+                    loadingSpinner.classList.add('hidden');
+                    submitBtn.disabled = false;
+                    if (data.success) {
+                        // Redirect to login page or main chat interface
+                        window.location.href = '{{ url_for("user_login") }}';
+                    } else {
+                        alert(data.message || 'Registration failed.');
+                    }
+                })
+                .catch(() => {
+                    submitText.textContent = 'Create Account';
+                    loadingSpinner.classList.add('hidden');
+                    submitBtn.disabled = false;
+                    alert('Server error. Please try again later.');
+                });
+            });
+        });
+    </script>
+    <script>
+function applyTheme(theme) {
+    document.body.classList.remove('theme-dark', 'theme-light');
+    document.body.classList.add('theme-' + theme);
+}
+
+// On page load, apply theme from localStorage (default to dark)
+document.addEventListener('DOMContentLoaded', function() {
+    const theme = localStorage.getItem('theme') || 'dark';
+    applyTheme(theme);
+});
+
+// Call this function when user changes theme in settings:
+function setTheme(theme) {
+    localStorage.setItem('theme', theme);
+    applyTheme(theme);
+
+    // Optionally, update user settings in backend if logged in
+    fetch('/api/user_settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ theme })
+    }).catch(()=>{});
+}
+</script>
+</body>
+</html>

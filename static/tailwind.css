@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Primary Colors */
+  --color-primary: #2563EB; /* blue-600 - Trust-building blue that conveys intelligence and reliability */
+  --color-primary-50: #EFF6FF; /* blue-50 */
+  --color-primary-100: #DBEAFE; /* blue-100 */
+  --color-primary-500: #3B82F6; /* blue-500 */
+  --color-primary-600: #2563EB; /* blue-600 */
+  --color-primary-700: #1D4ED8; /* blue-700 */
+  
+  /* Secondary Colors */
+  --color-secondary: #64748B; /* slate-500 - Sophisticated slate for professional contrast */
+  --color-secondary-100: #F1F5F9; /* slate-100 */
+  --color-secondary-200: #E2E8F0; /* slate-200 */
+  --color-secondary-300: #CBD5E1; /* slate-300 */
+  --color-secondary-400: #94A3B8; /* slate-400 */
+  --color-secondary-500: #64748B; /* slate-500 */
+  --color-secondary-600: #475569; /* slate-600 */
+  --color-secondary-700: #334155; /* slate-700 */
+  
+  /* Accent Colors */
+  --color-accent: #0EA5E9; /* sky-500 - Bright sky blue for interactive elements */
+  --color-accent-100: #E0F2FE; /* sky-100 */
+  --color-accent-500: #0EA5E9; /* sky-500 */
+  --color-accent-600: #0284C7; /* sky-600 */
+  
+  /* Background Colors */
+  --color-background: #FAFAFA; /* neutral-50 - Warm off-white for reduced eye strain */
+  --color-surface: #FFFFFF; /* white - Pure white for message containers */
+  
+  /* Text Colors */
+  --color-text-primary: #1E293B; /* slate-800 - Deep charcoal for optimal readability */
+  --color-text-secondary: #64748B; /* slate-500 - Muted slate for supporting information */
+  
+  /* Status Colors */
+  --color-success: #10B981; /* emerald-500 - Fresh emerald for positive feedback */
+  --color-success-100: #D1FAE5; /* emerald-100 */
+  --color-success-500: #10B981; /* emerald-500 */
+  
+  --color-warning: #F59E0B; /* amber-500 - Warm amber for attention states */
+  --color-warning-100: #FEF3C7; /* amber-100 */
+  --color-warning-500: #F59E0B; /* amber-500 */
+  
+  --color-error: #EF4444; /* red-500 - Clear red for critical messages */
+  --color-error-100: #FEE2E2; /* red-100 */
+  --color-error-500: #EF4444; /* red-500 */
+  
+  /* Shadow Variables */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-message: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-floating: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+  /* Border Variables */
+  --border-color: rgba(148, 163, 184, 0.2);
+  --border-radius-message: 8px;
+  --border-radius-button: 6px;
+  
+  /* Animation Variables */
+  --transition-default: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Custom Component Classes */
+@layer components {
+  .message-bubble {
+    @apply rounded-lg shadow-message bg-surface border border-opacity-20;
+    border-color: var(--border-color);
+    border-radius: var(--border-radius-message);
+    box-shadow: var(--shadow-message);
+  }
+  
+  .floating-action {
+    @apply shadow-floating rounded-md;
+    border-radius: var(--border-radius-button);
+    box-shadow: var(--shadow-floating);
+    transition: var(--transition-default);
+  }
+  
+  .input-adaptive {
+    @apply border border-opacity-20 rounded-md;
+    border-color: var(--border-color);
+    border-radius: var(--border-radius-button);
+    transition: var(--transition-default);
+  }
+  
+  .status-indicator {
+    transition: var(--transition-fast);
+  }
+  
+  .conversation-container {
+    background-color: var(--color-background);
+  }
+}
+
+/* Custom Animations */
+@keyframes pulse-recording {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes scale-in {
+  0% { transform: scale(0.95); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-pulse-recording {
+  animation: pulse-recording 1.5s ease-in-out infinite;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}

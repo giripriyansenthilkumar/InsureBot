@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About - InsureBot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <script src="{{ url_for('static', filename='dhws-data-injector.js') }}"></script>
+    <style>
+        body {
+            background: #18181b;
+            color: #f3f4f6 !important;
+        }
+        .bg-surface, .bg-secondary-50, .bg-secondary-100, .bg-secondary-200, .bg-secondary-300 {
+            background: #23232a !important;
+            color: #ffffffff !important;
+        }
+        .text-text-primary, .text-secondary-600, .text-secondary-500, .text-primary, .text-accent, .text-error, .text-success {
+            color: #ffffffff !important;
+            color: #f3f4f6;
+        }
+        .border-secondary-200, .border-secondary-300, .border-primary {
+            border-color: #444 !important;
+        }
+        .rounded-button, .rounded-full, .rounded-lg {
+            border-radius: 8px !important;
+        }
+        button, .rounded-button {
+            background: #fbbf24 !important;
+            color: #18181b !important;
+            font-weight: bold;
+            border: none;
+            box-shadow: 0 2px 8px #0006;
+            transition: background 0.2s, color 0.2s;
+        }
+        button:hover, .rounded-button:hover {
+            background: #f59e42 !important;
+            color: #fff !important;
+        }
+        .bg-primary, .bg-primary-700 {
+            background: #fbbf24 !important;
+            color: #18181b !important;
+        }
+        .bg-accent, .bg-accent-600 {
+            background: #6366f1 !important;
+            color: #fff !important;
+        }
+        .bg-error, .bg-error-600 {
+            background: #ef4444 !important;
+            color: #fff !important;
+        }
+        .bg-success, .bg-success-100 {
+            background: #22c55e !important;
+            color: #fff !important;
+        }
+        .message-bubble {
+            background: #23232a !important;
+            color: #f3f4f6 !important;
+            border-radius: 10px;
+        }
+        textarea, input[type="text"] {
+            background: #ffffffff !important;
+            color: #f3f4f6 !important;
+            border: 1px solid #444 !important;
+        }
+        .shadow-floating {
+            box-shadow: 0 2px 8px #0006 !important;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            background: #23232a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #444;
+            border-radius: 8px;
+        }
+        .bg-black.bg-opacity-50 {
+            background: rgba(24,24,27,0.85) !important;
+        }
+        /* Content styles */
+        main {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem;
+            background: #23232a;
+            border-radius: 16px;
+            box-shadow: 0 2px 16px #0008;
+        }
+        h2 {
+            color: #fbbf24;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        section {
+            margin-bottom: 2.5rem;
+        }
+        p, li {
+            font-size: 1.08rem;
+            line-height: 1.7;
+        }
+        a.text-primary {
+            color: #fbbf24 !important;
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+</head>
+<body class="bg-background min-h-screen font-inter">
+    <!-- Header (same as main_chat_interface.html) -->
+    <header class="bg-surface shadow-subtle border-b border-secondary-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo and Title -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12c0 1.54.36 3.04 1.05 4.35L2 22l5.65-1.05C9.96 21.64 11.46 22 13 22h7c1.1 0 2-.9 2-2V12c0-5.52-4.48-10-10-10z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-semibold text-text-primary">InsureBot - AI Chat Assistant</h1>
+                    </div>
+                </div>
+                <!-- Header Actions -->
+                <div class="flex items-center space-x-4">
+                    <!-- Settings -->
+                    <a href="{{ url_for('user_settings') }}"l" class="p-2 text-secondary-600 hover:text-text-primary rounded-button hover:bg-secondary-100 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                    </a>
+                    <!-- About Button -->
+                    <a href="{{ url_for('main_chat_interface') }}" class="p-2 text-secondary-600 hover:text-text-primary rounded-button hover:bg-secondary-100 transition-colors" title="About">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+                        </svg>
+                    </a>
+                    <!-- Log Out -->
+                    <a href="{{ url_for('user_login') }}" class="p-2 text-error hover:text-white rounded-button hover:bg-error transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <main>
+        <section>
+            <h2>About VoiceChat Bot</h2>
+            <p>
+                <strong>VoiceChat Bot</strong> is a next-generation AI-powered communication platform designed to make conversations smarter, faster, and more accessible. Our solution combines advanced natural language processing with real-time voice and text chat, enabling users to interact with AI in the most natural way possible.
+            </p>
+        </section>
+        <section>
+            <h2>Our Mission</h2>
+            <p>
+                Our mission is to bridge the gap between humans and technology by providing intuitive, secure, and intelligent tools for communication. We believe everyone should have access to seamless AI assistance, whether for productivity, learning, or personal growth.
+            </p>
+        </section>
+        <section>
+            <h2>Key Features</h2>
+            <ul>
+                <li>Real-time voice and text chat with AI</li>
+                <li>Accurate speech-to-text transcription</li>
+                <li>Downloadable chat and voice logs</li>
+                <li>Modern, accessible, and responsive design</li>
+                <li>Privacy-focused: your data stays secure</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Who We Are</h2>
+            <p>
+                We are a team of passionate developers, designers, and AI researchers dedicated to building smart, user-friendly communication tools. Our goal is to empower users to achieve more through the power of conversational AI.
+            </p>
+        </section>
+        <section>
+            <h2>Contact</h2>
+            <p>
+                For feedback, questions, or partnership opportunities, please email us at
+                <a href="mailto:support@voicechatbot.com" class="text-primary underline">support@voicechatbot.com</a>.
+            </p>
+        </section>
+    </main>
+    <footer class="bg-surface border-t border-secondary-200 py-6">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center">
+            <div class="text-sm text-secondary-500 mb-4 sm:mb-0">
+                © 2025 VoiceChat Bot. All Rights Reserved.
+            </div>
+            <div class="flex space-x-6 text-sm">
+                <a href="{{ url_for('privacy_policy') }}" class="text-secondary-500 hover:text-primary transition-colors duration-200">Privacy Policy</a>
+                <a href="{{ url_for('terms_of_service') }}" class="text-secondary-500 hover:text-primary transition-colors duration-200">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+    <!-- <button
+        onclick="window.location.href='main_chat_interface.html'"
+        style="
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 1000;
+            background: #fbbf24;
+            color: #18181b;
+            border: none;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            box-shadow: 0 2px 8px #0006;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: background 0.2s;
+        "
+        title="Go to Chat"
+    >
+        <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+        </svg>
+    </button> -->
+    <script>
+function applyTheme(theme) {
+    document.body.classList.remove('theme-dark', 'theme-light');
+    document.body.classList.add('theme-' + theme);
+}
+
+// On page load, apply theme from localStorage (default to dark)
+document.addEventListener('DOMContentLoaded', function() {
+    const theme = localStorage.getItem('theme') || 'dark';
+    applyTheme(theme);
+});
+
+// Call this function when user changes theme in settings:
+function setTheme(theme) {
+    localStorage.setItem('theme', theme);
+    applyTheme(theme);
+
+    // Optionally, update user settings in backend if logged in
+    fetch('/api/user_settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ theme })
+    }).catch(()=>{});
+}
+</script>
+</body>
+</html>

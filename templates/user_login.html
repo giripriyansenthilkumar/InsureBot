@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Account - InsureBot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <script src="{{ url_for('static', filename='dhws-data-injector.js') }}"></script>
+</head>
+<body class="bg-background min-h-screen font-inter">
+    <!-- Header -->
+    <header class="bg-surface shadow-subtle border-b border-secondary-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="{{ url_for('main_chat_interface') }}" class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12c0 1.54.36 3.04 1.05 4.35L2 22l5.65-1.05C9.96 21.64 11.46 22 13 22h7c1.1 0 2-.9 2-2V12c0-5.52-4.48-10-10-10zm0 18c-1.4 0-2.76-.35-4-.99L7 19l.99-1c-.64-1.24-.99-2.6-.99-4 0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z"/>
+                            </svg>
+                        </div>
+                        <span class="text-xl font-semibold text-text-primary">InsureBot</span>
+                    </a>
+                </div>
+                
+                <!-- Sign In Link -->
+                <!-- <div class="flex items-center">
+                    <a href="user_login.html" class="text-secondary-600 hover:text-primary transition-colors duration-200 font-medium">
+                        Sign In
+                    </a>
+                </div>-->
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex items-center justify-center px-4 py-8 sm:py-12">
+        <div class="w-full max-w-md">
+            <!-- Registration Form Container -->
+            <div class="bg-surface rounded-lg shadow-floating p-6 sm:p-8 border border-secondary-200">
+                <!-- Header -->
+                <div class="text-center mb-8">
+                    <h1 class="text-2xl sm:text-3xl font-semibold text-text-primary mb-2">Create Account</h1>
+                    <p class="text-secondary-500">Join InsureBot to start your AI conversation journey</p>
+                </div>
+
+                <!-- Social Registration Options -->
+                <!-- <div class="space-y-3 mb-6">
+                    <button class="w-full flex items-center justify-center px-4 py-3 border border-secondary-300 rounded-button bg-surface hover:bg-secondary-50 transition-colors duration-200 font-medium text-text-primary">
+                        <img src="https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?q=80&w=32&h=32&auto=format&fit=crop" alt="Google" class="w-5 h-5 mr-3" onerror="this.src='https://images.unsplash.com/photo-1611224923853-80b023f02d71?q=80&w=32&h=32&auto=format&fit=crop'; this.onerror=null;" />
+                        Continue with Google
+                    </button>
+                    <button class="w-full flex items-center justify-center px-4 py-3 border border-secondary-300 rounded-button bg-surface hover:bg-secondary-50 transition-colors duration-200 font-medium text-text-primary">
+                        <img src="https://images.unsplash.com/photo-1621768216002-5ac171876625?q=80&w=32&h=32&auto=format&fit=crop" alt="Apple" class="w-5 h-5 mr-3" onerror="this.src='https://images.unsplash.com/photo-1611224923853-80b023f02d71?q=80&w=32&h=32&auto=format&fit=crop'; this.onerror=null;" />
+                        Continue with Apple
+                    </button>
+                </div> -->
+
+                <!-- Divider -->
+                <!--<div class="relative mb-6">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-secondary-200"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-2 bg-surface text-secondary-500">Or continue with email</span>
+                    </div>
+                </div> -->
+
+                <!-- Login Form -->
+                <form id="loginForm" class="space-y-5">
+                    <!-- Email Field -->
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-text-primary mb-2">Email Address</label>
+                        <input type="email" id="email" name="email" required class="input-adaptive w-full px-4 py-3 border-secondary-300 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none" placeholder="Enter your email address" />
+                        <div id="emailError" class="hidden text-error text-sm mt-1"></div>
+                    </div>
+                    <!-- Password Field -->
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-text-primary mb-2">Password</label>
+                        <div class="relative">
+                            <input type="password" id="password" name="password" required class="input-adaptive w-full px-4 py-3 pr-12 border-secondary-300 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none" placeholder="Enter your password" />
+                            <button type="button" id="togglePassword" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-secondary-500 hover:text-text-primary" title="Show or hide password" aria-label="Show or hide password">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div id="passwordError" class="hidden text-error text-sm mt-1"></div>
+                    </div>
+                    <!-- Remember Me & Forgot Password -->
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input type="checkbox" id="rememberMe" name="rememberMe" class="w-4 h-4 text-primary border-secondary-300 rounded focus:ring-primary focus:ring-2" />
+                            <label for="rememberMe" class="ml-2 text-sm text-secondary-600">Remember me</label>
+                        </div>
+                        <a href="javascript:void(0)" id="forgotPasswordLink" class="text-sm text-primary hover:text-primary-700 underline">Forgot password?</a>
+                    </div>
+                    <!-- Security Warning -->
+                    <div id="securityWarning" class="hidden bg-warning-100 border border-warning-500 rounded-button p-3 mt-2">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-warning-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                            </svg>
+                            <span class="text-sm text-warning-500" id="securityMessage">Multiple failed login attempts detected. Please try again in a few minutes.</span>
+                        </div>
+                        <ul class="list-disc pl-5 mt-2">
+                            <li id="lowerReq" class="text-error">One lowercase letter</li>
+                        </ul>
+                    </div>
+                    <!-- Submit Button -->
+                    <button type="submit" id="submitBtn" class="w-full bg-primary hover:bg-primary-700 text-white font-medium py-3 px-4 rounded-button transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50">
+                        <span id="submitText">Sign In</span>
+                        <svg id="loadingSpinner" class="hidden animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                        </svg>
+                    </button>
+                </form>
+                <!-- Sign Up Link -->
+                <div class="mt-6 text-center">
+                    <p class="text-secondary-600">
+                        Don't have an account?
+                        <a href="{{ url_for('user_registration') }}" class="text-primary hover:text-primary-700 font-medium underline">Sign Up</a>
+                    </p>
+                </div>
+                <!-- Terms and Privacy -->
+                <div class="mt-4 text-center text-sm text-secondary-600">
+                    By signing in, you agree to our
+                    <a href="{{ url_for('terms_of_service') }}" class="text-primary hover:text-primary-700 underline">Terms of Service</a>
+                    and
+                    <a href="{{ url_for('privacy_policy') }}" class="text-primary hover:text-primary-700 underline">Privacy Policy</a>.
+                </div>
+                <!-- Trust Signals -->
+                <div class="mt-6 text-center flex items-center justify-center space-x-4 text-xs text-secondary-500">
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 mr-1 text-success" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+                        </svg>
+                        SSL Secured
+                    </div>
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 mr-1 text-success" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        Privacy Protected
+                    </div>
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 mr-1 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        Session Timeout: 30 min
+                    </div>
+                </div>
+                <p class="mt-2 text-xs text-secondary-500 text-center">
+                    Your session will automatically expire after 30 minutes of inactivity.
+                </p>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-surface border-t border-secondary-200 py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row justify-between items-center">
+                <div class="text-sm text-secondary-500 mb-4 sm:mb-0">
+                    © 2025 VoiceChat Bot. All Rights Reserved.
+                </div>
+                <div class="flex space-x-6 text-sm">
+                    <a href="{{ url_for('privacy_policy') }}" class="text-secondary-500 hover:text-primary transition-colors duration-200">Privacy Policy</a>
+                    <a href="{{ url_for('terms_of_service') }}" class="text-secondary-500 hover:text-primary transition-colors duration-200">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 z-50">
+        <div class="bg-surface rounded-lg shadow-floating p-6 w-full max-w-md">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold text-text-primary">Reset Password</h2>
+                <button id="closeForgotModal" class="text-secondary-500 hover:text-text-primary" title="Close" aria-label="Close">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <p class="text-secondary-600 mb-4">Enter your email address and we'll send you a link to reset your password.</p>
+            <form id="forgotPasswordForm">
+                <div class="mb-4">
+                    <label for="resetEmail" class="block text-sm font-medium text-text-primary mb-2">Email Address</label>
+                    <input type="email" id="resetEmail" required class="input-adaptive w-full px-4 py-3 border-secondary-300 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none" placeholder="Enter your email address" />
+                </div>
+                <button type="submit" class="w-full bg-primary hover:bg-primary-700 text-white font-medium py-3 px-4 rounded-button transition-colors duration-200">
+                    Send Reset Link
+                </button>
+            </form>
+        </div>
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const togglePasswordBtn = document.getElementById('togglePassword');
+        const submitBtn = document.getElementById('submitBtn');
+        const submitText = document.getElementById('submitText');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const securityWarning = document.getElementById('securityWarning');
+        const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+        const forgotPasswordModal = document.getElementById('forgotPasswordModal');
+        const closeForgotModal = document.getElementById('closeForgotModal');
+        const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+
+        let failedAttempts = 0;
+        const maxAttempts = 3;
+
+        // Password visibility toggle
+        togglePasswordBtn.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+        });
+
+        // Simple email validation
+        emailInput.addEventListener('blur', function() {
+            const value = this.value;
+            const errorElement = document.getElementById('emailError');
+            if (!value) {
+                errorElement.textContent = 'Email is required';
+                errorElement.classList.remove('hidden');
+                emailInput.classList.add('border-error');
+            } else {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(value)) {
+                    errorElement.textContent = 'Please enter a valid email address';
+                    errorElement.classList.remove('hidden');
+                    emailInput.classList.add('border-error');
+                } else {
+                    errorElement.classList.add('hidden');
+                    emailInput.classList.remove('border-error');
+                }
+            }
+        });
+
+        // Simple password validation
+        passwordInput.addEventListener('blur', function() {
+            const value = this.value;
+            const errorElement = document.getElementById('passwordError');
+            if (!value) {
+                errorElement.textContent = 'Password is required';
+                errorElement.classList.remove('hidden');
+                passwordInput.classList.add('border-error');
+            } else {
+                errorElement.classList.add('hidden');
+                passwordInput.classList.remove('border-error');
+            }
+        });
+
+        // Form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (failedAttempts >= maxAttempts) {
+                securityWarning.classList.remove('hidden');
+                return;
+            }
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            // Show loading state
+            submitText.textContent = 'Signing In...';
+            loadingSpinner.classList.remove('hidden');
+            submitBtn.disabled = true;
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            })
+            .then(response => response.json().then(data => ({ status: response.status, body: data })))
+            .then(({ status, body }) => {
+                if (status === 200 && body.success) {
+                    // Successful login
+                    localStorage.setItem('userEmail', email);
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('loginTime', new Date().toISOString());
+                    window.location.href = '{{ url_for('main_chat_interface') }}';
+                } else {
+                    failedAttempts++;
+                    submitText.textContent = 'Sign In';
+                    loadingSpinner.classList.add('hidden');
+                    submitBtn.disabled = false;
+                    const emailError = document.getElementById('emailError');
+                    const passwordError = document.getElementById('passwordError');
+                    emailError.textContent = body.message || 'Invalid email or password';
+                    emailError.classList.remove('hidden');
+                    emailInput.classList.add('border-error');
+                    passwordError.textContent = body.message || 'Invalid email or password';
+                    passwordError.classList.remove('hidden');
+                    passwordInput.classList.add('border-error');
+                    if (failedAttempts >= maxAttempts) {
+                        securityWarning.classList.remove('hidden');
+                    }
+                }
+            })
+            .catch(() => {
+                submitText.textContent = 'Sign In';
+                loadingSpinner.classList.add('hidden');
+                submitBtn.disabled = false;
+                const emailError = document.getElementById('emailError');
+                const passwordError = document.getElementById('passwordError');
+                emailError.textContent = 'Server error. Please try again later.';
+                emailError.classList.remove('hidden');
+                emailInput.classList.add('border-error');
+                passwordError.textContent = 'Server error. Please try again later.';
+                passwordError.classList.remove('hidden');
+                passwordInput.classList.add('border-error');
+            });
+        });
+
+        // Forgot password modal
+        forgotPasswordLink.addEventListener('click', function() {
+            forgotPasswordModal.classList.remove('hidden');
+        });
+        closeForgotModal.addEventListener('click', function() {
+            forgotPasswordModal.classList.add('hidden');
+        });
+        forgotPasswordModal.addEventListener('click', function(e) {
+            if (e.target === forgotPasswordModal) {
+                forgotPasswordModal.classList.add('hidden');
+            }
+        });
+        forgotPasswordForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Password reset link sent to your email!');
+            forgotPasswordModal.classList.add('hidden');
+        });
+
+        // Session timeout warning
+        let sessionTimeout;
+        function resetSessionTimeout() {
+            clearTimeout(sessionTimeout);
+            sessionTimeout = setTimeout(function() {
+                alert('Your session will expire in 5 minutes due to inactivity.');
+            }, 25 * 60 * 1000); // 25 minutes
+        }
+        document.addEventListener('mousemove', resetSessionTimeout);
+        document.addEventListener('keypress', resetSessionTimeout);
+        resetSessionTimeout();
+    });
+    </script>
+    <script>
+function applyTheme(theme) {
+    document.body.classList.remove('theme-dark', 'theme-light');
+    document.body.classList.add('theme-' + theme);
+}
+
+// On page load, apply theme from localStorage (default to dark)
+document.addEventListener('DOMContentLoaded', function() {
+    const theme = localStorage.getItem('theme') || 'dark';
+    applyTheme(theme);
+});
+
+// Call this function when user changes theme in settings:
+function setTheme(theme) {
+    localStorage.setItem('theme', theme);
+    applyTheme(theme);
+
+    // Optionally, update user settings in backend if logged in
+    fetch('/api/user_settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ theme })
+    }).catch(()=>{});
+}
+</script>
+</body>
+</html>
