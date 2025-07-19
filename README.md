@@ -4,14 +4,9 @@ This is a simple Flask backend project.
 
 ## Setup
 
-1. Install dependencies:
+1. Run the bat file to install the required packages.
    ```powershell
-   pip install -r requirements.txt
-   ```
-2. Run the app:
-   ```powershell
-   python app.py
-   ```
+   start.bat
 
 
 ## Project Structure
