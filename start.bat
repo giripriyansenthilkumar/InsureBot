@@ -21,6 +21,9 @@ python -m pip install --upgrade pip
 REM Install requirements
 pip install -r requirements.txt
 
+REM Run training script to build FAISS index and chunks
+python train_brain.py
+
 REM (Optional) Test RAG pipeline (uncomment if you want to run rag_brain.py directly)
 python rag_brain.py
 
