@@ -7,7 +7,7 @@ from google.api_core.exceptions import ResourceExhausted
 import os
 
 # Load the sentence transformer model for embedding
-model = SentenceTransformer('all-MiniLM-L6-v2')
+model = SentenceTransformer('./all-MiniLM-L6-v2')
 
 # Load the FAISS index and document chunks
 index = faiss.read_index("model/insura_index.faiss")
