@@ -8,9 +8,13 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 from rag_brain import get_response
+from googletrans import Translator
+from datetime import timedelta
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'  # Replace with a secure key
+app.permanent_session_lifetime = timedelta(minutes=5)
+translator = Translator()
 
 # MongoDB setup
 # MongoDB setup
@@ -67,7 +71,18 @@ def index():
 @app.route('/main_chat_interface')
 def main_chat_interface():
     user_name = session.get('user_name', 'Guest')
-    return render_template('main_chat_interface.html', user_name=user_name)
+    language = session.get('language', 'en')
+    return render_template('main_chat_interface.html', user_name=user_name, language=language)
+
+# Set language
+@app.route('/set_language', methods=['POST'])
+def set_language():
+    data = request.get_json()
+    language = data.get('language')
+    if language:
+        session['language'] = language
+        return jsonify({'success': True, 'message': f'Language set to {language}'})
+    return jsonify({'success': False, 'message': 'No language provided'}), 400
 
 # Chat history
 @app.route('/chat_history')
@@ -98,6 +113,7 @@ def login():
     password = data.get('password')
     user = users_collection.find_one({'email': email})
     if user and check_password_hash(user['password'], password):
+        session.permanent = True
         session['user_name'] = user.get('name', '')
         session['user_email'] = user.get('email', '')
         return jsonify({'success': True, 'message': 'Login successful'})
@@ -120,15 +136,30 @@ def terms_of_service():
     return render_template('terms_of_service.html')
 
 # Chatbot query API endpoint
+# Helper function for translation
+def translate_text(text, dest_lang):
+    if dest_lang == 'en':
+        return text
+    try:
+        translated = translator.translate(text, dest=dest_lang)
+        return translated.text
+    except Exception as e:
+        print(f"Translation error: {e}")
+        return text  # Fallback to original text
+
 @app.route('/chatbot_query', methods=['POST'])
 def chatbot_query():
     data = request.get_json()
     message = data.get('message', '')
+    language = session.get('language', 'en')  # Use language from session
     if not message:
         return jsonify({'success': False, 'error': 'No message provided'}), 400
     try:
-        response = get_response(message)
-        return jsonify({'success': True, 'response': response})
+        # Get response in English first
+        response_en = get_response(message)
+        # Translate to the target language
+        response_translated = translate_text(response_en, language)
+        return jsonify({'success': True, 'response': response_translated})
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
