@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Flask>=2.2
 pymongo>=4.3
 werkzeug>=2.2
@@ -9,3 +10,48 @@ google-api-core>=2.0
 googletrans==4.0.0-rc1
 # For pickle (part of Python stdlib, no need to list)
 # If using Flask with templates, you may want Jinja2
+=======
+# Core NLP and RAG
+sentence-transformers==2.2.2
+openai==1.30.1
+
+# Whisper STT (Speech-to-Text)
+git+https://github.com/openai/whisper.git
+
+# Torch with CUDA support (adjust cu118 based on your CUDA version)
+# torch==2.2.2+cu118
+# torchaudio==2.2.2+cu118
+# torchvision==0.17.2+cu118
+# --extra-index-url https://download.pytorch.org/whl/cu118
+
+# FAISS for vector search (CPU version for Windows)
+faiss-cpu
+
+# Google Generative AI
+google-generativeai
+google-api-core
+
+# Text-to-Speech (TTS)
+TTS==0.22.0  # Coqui TTS
+# OR use pyttsx3 for CPU-based local TTS (cross-platform)
+# pyttsx3==2.90
+
+# Audio handling
+pydub==0.25.1
+soundfile==0.12.1
+ffmpeg-python==0.2.0
+
+# Frontend (optional)
+streamlit==1.35.0
+
+# Utilities
+numpy==1.22.0
+scipy==1.11.2
+pickle-mixin==1.0.2
+
+# Flask and MongoDB
+flask
+flask-cors
+pymongo
+dnspython
+>>>>>>> ca92c4a8c792327bd61fcba5d7dff7ffbcd11466

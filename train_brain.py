@@ -8,7 +8,11 @@ import os
 os.makedirs("model", exist_ok=True)
 
 # Load the embedding model
+<<<<<<< HEAD
 model = SentenceTransformer("E:/project/InsureBot/all-MiniLM-L6-v2")
+=======
+model = SentenceTransformer('all-MiniLM-L6-v2')
+>>>>>>> ca92c4a8c792327bd61fcba5d7dff7ffbcd11466
 
 # Load your KB content
 with open("kb/policy_knowledge.txt", "r", encoding="utf-8") as f:
